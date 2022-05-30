@@ -1,0 +1,24 @@
+{
+  "name": "@dxpr/counteverest",
+  "version": "1.0.0",
+  "description": "Get your own easily customizable countdown script without any further JS knowledge!",
+  "main": "js/vendor/jquery.counteverest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dxpr/CountEverest.git"
+  },
+  "keywords": [
+    "dxpr",
+    "counteverest",
+    "countdown"
+  ],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/dxpr/CountEverest/issues"
+  },
+  "homepage": "https://github.com/dxpr/CountEverest#readme"
+}
