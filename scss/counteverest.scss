@@ -205,12 +205,11 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
 
 .ce-countdown--theme-9 .ce-digit,
 .ce-countdown--theme-9 .ce-label {
-  display: inline;
   line-height: 1;
 }
 
 .ce-countdown--theme-9 .ce-digit {
-  display: block;
+  display: inline;
   font-size: 40px;
 }
 
