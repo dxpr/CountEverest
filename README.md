@@ -109,13 +109,22 @@ CountEverest offers extensive customization options. Here are some examples:
 
 ### Included styles
 
+#### Simple Grid Style (Theme 1)
+
+![counteverest-grid](https://github.com/user-attachments/assets/da2b7b42-9402-4e1b-8bfe-8a6a36c44cc5)
+
+#### Circles Style (Theme 9)
+
+![counteverest-circles](https://github.com/user-attachments/assets/9154a576-2b98-47b6-a82a-8cf7d9973e6c)
+
 #### Flip Clock Style (Theme 10)
 
 ![counteverest-flip-down](https://github.com/user-attachments/assets/50697427-7fd7-42b1-9be7-a94ba03d8a17)
 
-#### Simple Grid Style
+#### Minimal Style For Background Video/Image (Theme 12)
 
-![counteverest-grid](https://github.com/user-attachments/assets/da2b7b42-9402-4e1b-8bfe-8a6a36c44cc5)
+![counteverest-bgvideo](https://github.com/user-attachments/assets/eca809f7-09bc-4e0e-b43b-83afc05f41ce)
+
 
 ### Custom Labels
 
