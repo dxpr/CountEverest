@@ -113,6 +113,10 @@ CountEverest offers extensive customization options. Here are some examples:
 
 ![counteverest-grid](https://github.com/user-attachments/assets/da2b7b42-9402-4e1b-8bfe-8a6a36c44cc5)
 
+#### Simple Color Blocks Style (Theme 6)
+
+![counteverest-colorblocks](https://github.com/user-attachments/assets/f98eb165-fa1b-4098-b607-5dda5759ec95)
+
 #### Circles Style (Theme 9)
 
 ![counteverest-circles](https://github.com/user-attachments/assets/9154a576-2b98-47b6-a82a-8cf7d9973e6c)
