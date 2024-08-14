@@ -1,0 +1,22 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": [
+            ">0.25%",
+            "not dead"
+          ]
+        },
+        "useBuiltIns": "usage",
+        "corejs": 3
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-private-methods",
+    "@babel/plugin-transform-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
+  ]
+}

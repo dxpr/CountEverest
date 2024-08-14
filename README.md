@@ -34,8 +34,8 @@ CountEverest is a lightweight, customizable countdown script that's easy to inte
 2.  Include the CSS and JS files in your HTML:
     
     ```
-    <link rel="stylesheet" href="css/counteverest.css">
-    <script src="js/counteverest.js"></script>
+    <link rel="stylesheet" href="../dist/counteverest.css">
+    <script src="../dist/counteverest.min.js"></script>
     ```
     
 3.  Add the countdown HTML:
@@ -204,7 +204,7 @@ If you're migrating from the jQuery version to the new vanilla JavaScript versio
     <script src="js/jquery.counteverest.js"></script>
     
     <!-- New -->
-    <script src="js/counteverest.js"></script>
+    <script src="../dist/counteverest.min.js"></script>
     ```
     
 2.  Update your initialization code:

@@ -6,73 +6,75 @@
  * @see       http://counteverest.anacoda.de
  */
 
+// eslint-disable-next-line no-unused-vars
 class CountEverest {
-    static DEFAULT_SETTINGS = {
-        day: 1,
-        month: 1,
-        year: 2050,
-        hour: 0,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-        timeZone: null,
-        countUp: false,
-        currentDateTime: null,
-        yearsWrapper: '.ce-years',
-        daysWrapper: '.ce-days',
-        hoursWrapper: '.ce-hours',
-        minutesWrapper: '.ce-minutes',
-        secondsWrapper: '.ce-seconds',
-        decisecondsWrapper: '.ce-dseconds',
-        millisecondsWrapper: '.ce-mseconds',
-        yearsLabelWrapper: '.ce-years-label',
-        daysLabelWrapper: '.ce-days-label',
-        hoursLabelWrapper: '.ce-hours-label',
-        minutesLabelWrapper: '.ce-minutes-label',
-        secondsLabelWrapper: '.ce-seconds-label',
-        decisecondsLabelWrapper: '.ce-dseconds-label',
-        millisecondsLabelWrapper: '.ce-mseconds-label',
-        singularLabels: true,
-        yearsLabel: 'Years',
-        yearLabel: 'Year',
-        daysLabel: 'Days',
-        dayLabel: 'Day',
-        hoursLabel: 'Hours',
-        hourLabel: 'Hour',
-        minutesLabel: 'Minutes',
-        minuteLabel: 'Minute',
-        secondsLabel: 'Seconds',
-        secondLabel: 'Second',
-        decisecondsLabel: 'Deciseconds',
-        decisecondLabel: 'Decisecond',
-        millisecondsLabel: 'Milliseconds',
-        millisecondLabel: 'Millisecond',
-        timeout: 1000,
-        highspeedTimeout: 4,
-        yearInMilliseconds: 31536000000,
-        dayInMilliseconds: 86400000,
-        hourInMilliseconds: 3600000,
-        minuteInMilliseconds: 60000,
-        secondInMilliseconds: 1000,
-        decisecondInMilliseconds: 100,
-        onInit: null,
-        beforeCalculation: null,
-        afterCalculation: null,
-        onChange: null,
-        onComplete: null
-    };
-
-    #element;
-    #settings;
-    #intervalId;
-    #targetDate;
+    static DEFAULT_SETTINGS;
 
     constructor(element, options) {
+        CountEverest.DEFAULT_SETTINGS = {
+            day: 1,
+            month: 1,
+            year: 2050,
+            hour: 0,
+            minute: 0,
+            second: 0,
+            millisecond: 0,
+            timeZone: null,
+            countUp: false,
+            currentDateTime: null,
+            yearsWrapper: '.ce-years',
+            daysWrapper: '.ce-days',
+            hoursWrapper: '.ce-hours',
+            minutesWrapper: '.ce-minutes',
+            secondsWrapper: '.ce-seconds',
+            decisecondsWrapper: '.ce-dseconds',
+            millisecondsWrapper: '.ce-mseconds',
+            yearsLabelWrapper: '.ce-years-label',
+            daysLabelWrapper: '.ce-days-label',
+            hoursLabelWrapper: '.ce-hours-label',
+            minutesLabelWrapper: '.ce-minutes-label',
+            secondsLabelWrapper: '.ce-seconds-label',
+            decisecondsLabelWrapper: '.ce-dseconds-label',
+            millisecondsLabelWrapper: '.ce-mseconds-label',
+            singularLabels: true,
+            yearsLabel: 'Years',
+            yearLabel: 'Year',
+            daysLabel: 'Days',
+            dayLabel: 'Day',
+            hoursLabel: 'Hours',
+            hourLabel: 'Hour',
+            minutesLabel: 'Minutes',
+            minuteLabel: 'Minute',
+            secondsLabel: 'Seconds',
+            secondLabel: 'Second',
+            decisecondsLabel: 'Deciseconds',
+            decisecondLabel: 'Decisecond',
+            millisecondsLabel: 'Milliseconds',
+            millisecondLabel: 'Millisecond',
+            timeout: 1000,
+            highspeedTimeout: 4,
+            yearInMilliseconds: 31536000000,
+            dayInMilliseconds: 86400000,
+            hourInMilliseconds: 3600000,
+            minuteInMilliseconds: 60000,
+            secondInMilliseconds: 1000,
+            decisecondInMilliseconds: 100,
+            onInit: null,
+            beforeCalculation: null,
+            afterCalculation: null,
+            onChange: null,
+            onComplete: null
+        };
         this.#element = element;
         this.#settings = { ...CountEverest.DEFAULT_SETTINGS, ...options };
         this.#intervalId = null;
         this.init();
     }
+
+    #element;
+    #settings;
+    #intervalId;
+    #targetDate;
 
     init() {
         this.setTargetDate(new Date(this.#settings.year, this.#settings.month - 1, this.#settings.day, this.#settings.hour, this.#settings.minute, this.#settings.second));
@@ -177,5 +179,4 @@ class CountEverest {
     }
 }
 
-// For backwards compatibility
-window.countEverest = (element, options) => new CountEverest(element, options);
+window.CountEverest = CountEverest;
