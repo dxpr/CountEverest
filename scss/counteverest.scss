@@ -66,10 +66,8 @@
 .ce-countdown--theme-6 .ce-col {
   display: inline-block;
   font-size: 24px;
-}
-
-.ce-countdown--theme-6 .ce-col:first-child {
   margin: 0;
+  padding: 0 5px;
 }
 
 .ce-countdown--theme-6 .ce-years,
@@ -79,11 +77,12 @@
 .ce-countdown--theme-6 .ce-seconds {
   color: #fff;
   display: block;
-  font-size: 46px;
+  font-size: 36px;
   font-weight: 300;
-  height: 66px;
-  line-height: 66px;
-  margin-bottom: 10px;
+  height: 60px;
+  line-height: 60px;
+  width: 80px;
+  text-align: center;
 }
 
 html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-years,
@@ -110,11 +109,12 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-animate .ce-flip-wrap {
 
 .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-front,
 .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
-  height: 66px;
+  height: 60px;
   left: 0;
   position: absolute;
   top: 0;
-  width: 100%;
+  width: 80px;
+  background: navy;
 }
 
 html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-front,
@@ -126,10 +126,22 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
   transform: rotateY(180deg);
 }
 
+.ce-countdown--theme-6 .ce-years-label,
+.ce-countdown--theme-6 .ce-days-label,
+.ce-countdown--theme-6 .ce-hours-label,
+.ce-countdown--theme-6 .ce-minutes-label,
+.ce-countdown--theme-6 .ce-seconds-label {
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+  width: 80px;
+  text-align: center;
+}
+
 @media all and (width <= 560px) {
   .ce-countdown--theme-6 .ce-col {
-    font-size: 12px;
-    margin: 0 2%;
+    font-size: 16px;
+    padding: 0 2px;
   }
 
   .ce-countdown--theme-6 .ce-years,
@@ -137,16 +149,26 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
   .ce-countdown--theme-6 .ce-hours,
   .ce-countdown--theme-6 .ce-minutes,
   .ce-countdown--theme-6 .ce-seconds {
-    color: #fff;
-    display: block;
     font-size: 24px;
-    height: 40px;
-    line-height: 40px;
+    height: 45px;
+    line-height: 45px;
+    width: 60px;
   }
 
   .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-front,
   .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
-    height: 40px;
+    height: 45px;
+    width: 60px;
+  }
+
+  .ce-countdown--theme-6 .ce-years-label,
+  .ce-countdown--theme-6 .ce-days-label,
+  .ce-countdown--theme-6 .ce-hours-label,
+  .ce-countdown--theme-6 .ce-minutes-label,
+  .ce-countdown--theme-6 .ce-seconds-label {
+    font-size: 10px;
+    margin-top: 3px;
+    width: 60px;
   }
 }
 
@@ -183,7 +205,7 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
 
 .ce-countdown--theme-9 .ce-digit,
 .ce-countdown--theme-9 .ce-label {
-  display: block;
+  display: inline;
   line-height: 1;
 }
 
@@ -207,6 +229,7 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
 
   .ce-countdown--theme-9 .ce-digit {
     font-size: 35px;
+    display: inline;
   }
 }
 
