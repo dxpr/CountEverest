@@ -3,7 +3,7 @@
 ![Version 3.0.0](https://img.shields.io/badge/version-3.0.0-blue.svg)
 ![License: GPL v2](https://img.shields.io/badge/license-GPL%20v2-green.svg)
 ![Vanilla JS](https://img.shields.io/badge/vanilla-js-yellow.svg)
-![Size: 10 KB](https://img.shields.io/badge/size-4%20KB-brightgreen.svg)
+![Size: 10 KB](https://img.shields.io/badge/size-1%20KB-brightgreen.svg)
 
 ![CountEverest Demo](demo.gif)
 
@@ -247,13 +247,13 @@ For more examples, check out our [demo page](https://dxpr.github.io/CountEverest
 
 ## Comparison with Other Libraries
 
-| Feature             | CountEverest | Countdown.js | FlipClock.js |
-| ------------------- | ------------ | ------------ | ------------ |
-| File Size           | 4 KB         | 4 KB         | 76 KB        |
-| Dependency-free     | ✅           | ✅           | ❌ (jQuery)  |
-| Customizable Labels | ✅           | ❌           | ✅           |
-| Count Up Feature    | ✅           | ❌           | ✅           |
-| Timezone Support    | ✅           | ❌           | ✅           |
+| Feature             | CountEverest | Countdown.js | TimeCircles | SimpleTimer.js |
+| ------------------- | ------------ | ------------ | ----------- | -------------- |
+| File Size           | 1 KB         | 4 KB         | 10 KB       | 3 KB           |
+| Dependency-free     | ✅           | ✅           | ❌ (jQuery) | ✅             |
+| Customizable Labels | ✅           | ❌           | ✅          | ✅             |
+| Count Up Feature    | ✅           | ❌           | ❌          | ❌             |
+| Timezone Support    | ✅           | ❌           | ✅          | ❌             |
 
 ## Frequently Asked Questions
 
