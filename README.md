@@ -35,7 +35,7 @@ CountEverest is a lightweight, customizable countdown script that's easy to inte
     
     ```
     <link rel="stylesheet" href="css/counteverest.css">
-    <script src="js/vendor/counteverest.js"></script>
+    <script src="js/counteverest.js"></script>
     ```
     
 3.  Add the countdown HTML:
@@ -201,10 +201,10 @@ If you're migrating from the jQuery version to the new vanilla JavaScript versio
     
     ```
     <!-- Old -->
-    <script src="js/vendor/jquery.counteverest.js"></script>
+    <script src="js/jquery.counteverest.js"></script>
     
     <!-- New -->
-    <script src="js/vendor/counteverest.js"></script>
+    <script src="js/counteverest.js"></script>
     ```
     
 2.  Update your initialization code:

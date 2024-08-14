@@ -2,7 +2,7 @@
   "name": "@dxpr/counteverest",
   "version": "1.0.0",
   "description": "Get your own easily customizable countdown script without any further JS knowledge!",
-  "main": "js/vendor/jquery.counteverest.js",
+  "main": "js/jquery.counteverest.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
