@@ -8,38 +8,38 @@ CountEverest is a lightweight, customizable countdown script that's easy to inte
 
 ## Table of Contents
 
-*   [Quick Start](#quick-start)
-*   [Installation](#installation)
-*   [Usage](#usage)
-*   [Customization](#customization)
-*   [Options](#options)
-*   [Callback Functions](#callback-functions)
-*   [API Methods](#api-methods)
-*   [Migration Guide from jQuery Version](#migration-guide)
-*   [Examples](#examples)
-*   [Projects Using CountEverest](#projects-using-counteverest)
-*   [Comparison with Other Libraries](#comparison)
-*   [Contributing](#contributing)
-*   [Troubleshooting](#troubleshooting)
-*   [License](#license)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Customization](#customization)
+- [Options](#options)
+- [Callback Functions](#callback-functions)
+- [API Methods](#api-methods)
+- [Migration Guide from jQuery Version](#migration-guide)
+- [Examples](#examples)
+- [Projects Using CountEverest](#projects-using-counteverest)
+- [Comparison with Other Libraries](#comparison)
+- [Contributing](#contributing)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
 
 ## Quick Start
 
 1.  Clone the repository or download the latest release:
-    
+
     ```
     git clone git@github.com:dxpr/CountEverest.git
     ```
-    
+
 2.  Include the CSS and JS files in your HTML:
-    
+
     ```
-    <link rel="stylesheet" href="../dist/counteverest.css">
+    <link rel="stylesheet" href="../dist/counteverest.min.css">
     <script src="../dist/counteverest.min.js"></script>
     ```
-    
+
 3.  Add the countdown HTML:
-    
+
     ```
     <div class="ce-countdown">
       <span class="ce-days"></span> <span class="ce-days-label"></span>
@@ -48,9 +48,9 @@ CountEverest is a lightweight, customizable countdown script that's easy to inte
       <span class="ce-seconds"></span> <span class="ce-seconds-label"></span>
     </div>
     ```
-    
+
 4.  Initialize CountEverest:
-    
+
     ```
     document.addEventListener('DOMContentLoaded', () => {
       const countdownElement = document.querySelector('.ce-countdown');
@@ -63,13 +63,12 @@ CountEverest is a lightweight, customizable countdown script that's easy to inte
       }
     });
     ```
-    
 
 ## Installation
 
 ### Direct Download
 
-Download the `counteverest.js` and `counteverest.css` files from the [releases page](https://github.com/dxpr/CountEverest/releases) and include them in your project.
+Download the `counteverest.js` and `counteverest.min.css` files from the [releases page](https://github.com/dxpr/CountEverest/releases) and include them in your project.
 
 ### Git Clone
 
@@ -83,7 +82,7 @@ After including the necessary files, you can create a countdown by following the
 
 1.  Create the HTML structure for your countdown (see Quick Start for an example).
 2.  Initialize CountEverest with your desired options:
-    
+
     ```
     const countdown = new CountEverest(document.querySelector('.ce-countdown'), {
       day: 25,
@@ -94,7 +93,6 @@ After including the necessary files, you can create a countdown by following the
       second: 0
     });
     ```
-    
 
 ## Customization
 
@@ -135,26 +133,26 @@ new CountEverest(element, {
 
 Here's a comprehensive list of options you can use to customize CountEverest:
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| day | Number | 1   | The target day of the month (1-31) |
-| month | Number | 1   | The target month (1-12) |
-| year | Number | 2050 | The target year |
-| hour | Number | 0   | The target hour (0-23) |
-| minute | Number | 0   | The target minute (0-59) |
-| second | Number | 0   | The target second (0-59) |
-| timeZone | Number | null | The timezone offset (-12 to 14) |
-| countUp | Boolean | false | If true, counts up from the target date |
+| Option   | Type    | Default | Description                             |
+| -------- | ------- | ------- | --------------------------------------- |
+| day      | Number  | 1       | The target day of the month (1-31)      |
+| month    | Number  | 1       | The target month (1-12)                 |
+| year     | Number  | 2050    | The target year                         |
+| hour     | Number  | 0       | The target hour (0-23)                  |
+| minute   | Number  | 0       | The target minute (0-59)                |
+| second   | Number  | 0       | The target second (0-59)                |
+| timeZone | Number  | null    | The timezone offset (-12 to 14)         |
+| countUp  | Boolean | false   | If true, counts up from the target date |
 
 ## Callback Functions
 
 CountEverest provides several callback functions that you can use to add custom behavior:
 
-*   `onInit()`: Called when the countdown is initialized
-*   `beforeCalculation()`: Called before each calculation cycle
-*   `afterCalculation()`: Called after each calculation cycle
-*   `onChange(values)`: Called when the countdown values change. Receives an object with the current values.
-*   `onComplete()`: Called when the countdown reaches zero
+- `onInit()`: Called when the countdown is initialized
+- `beforeCalculation()`: Called before each calculation cycle
+- `afterCalculation()`: Called after each calculation cycle
+- `onChange(values)`: Called when the countdown values change. Receives an object with the current values.
+- `onComplete()`: Called when the countdown reaches zero
 
 Example usage:
 
@@ -174,41 +172,40 @@ new CountEverest(element, {
 
 CountEverest instances provide the following methods:
 
-*   `setTargetDate(date)`: Set a new target date
-    
-    ```
-    countdown.setTargetDate(new Date(2024, 0, 1));
-    ```
-    
-*   `getTargetDate()`: Get the current target date
-    
-    ```
-    const targetDate = countdown.getTargetDate();
-    ```
-    
-*   `destroy()`: Stop the countdown and clean up
-    
-    ```
-    countdown.destroy();
-    ```
-    
+- `setTargetDate(date)`: Set a new target date
+
+  ```
+  countdown.setTargetDate(new Date(2024, 0, 1));
+  ```
+
+- `getTargetDate()`: Get the current target date
+
+  ```
+  const targetDate = countdown.getTargetDate();
+  ```
+
+- `destroy()`: Stop the countdown and clean up
+
+  ```
+  countdown.destroy();
+  ```
 
 ## Migration Guide from jQuery Version
 
 If you're migrating from the jQuery version to the new vanilla JavaScript version, here are the key changes you need to make:
 
 1.  Update your script inclusion:
-    
+
     ```
     <!-- Old -->
     <script src="js/jquery.counteverest.js"></script>
-    
+
     <!-- New -->
     <script src="../dist/counteverest.min.js"></script>
     ```
-    
+
 2.  Update your initialization code:
-    
+
     ```
     // Old
     $('.countdown').countEverest({
@@ -216,7 +213,7 @@ If you're migrating from the jQuery version to the new vanilla JavaScript versio
       month: 1,
       year: 2026
     });
-    
+
     // New
     const countdown = new CountEverest(document.querySelector('.countdown'), {
       day: 1,
@@ -224,18 +221,17 @@ If you're migrating from the jQuery version to the new vanilla JavaScript versio
       year: 2026
     });
     ```
-    
+
 3.  Update any custom code that interacts with the countdown:
-    
+
     ```
     // Old
     var countdown = $('.countdown').data('countEverest');
     countdown.setTargetDate(new Date(2024, 0, 1));
-    
+
     // New
     countdown.setTargetDate(new Date(2024, 0, 1));
     ```
-    
 
 ## Examples
 
@@ -279,17 +275,17 @@ For more examples, check out our [demo page](https://dxpr.github.io/CountEverest
 
 ## Projects Using CountEverest
 
-*   [DXPR Builder](https://www.drupal.org/project/dxpr_builder): A Drupal website builder that uses CountEverest for countdown functionality.
+- [DXPR Builder](https://www.drupal.org/project/dxpr_builder): A Drupal website builder that uses CountEverest for countdown functionality.
 
 ## Comparison with Other Libraries
 
-| Feature | CountEverest | Countdown.js | FlipClock.js |
-| --- | --- | --- | --- |
-| File Size | 10 KB | 4 KB | 76 KB |
-| Dependency-free | ✅   | ✅   | ❌ (jQuery) |
-| Customizable Labels | ✅   | ❌   | ✅   |
-| Count Up Feature | ✅   | ❌   | ✅   |
-| Timezone Support | ✅   | ❌   | ✅   |
+| Feature             | CountEverest | Countdown.js | FlipClock.js |
+| ------------------- | ------------ | ------------ | ------------ |
+| File Size           | 10 KB        | 4 KB         | 76 KB        |
+| Dependency-free     | ✅           | ✅           | ❌ (jQuery)  |
+| Customizable Labels | ✅           | ❌           | ✅           |
+| Count Up Feature    | ✅           | ❌           | ✅           |
+| Timezone Support    | ✅           | ❌           | ✅           |
 
 ## Contributing
 
