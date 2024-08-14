@@ -12,6 +12,8 @@ projects. It offers a range of features including callback functions, left-hand 
 localization. Perfect for developers who want a flexible countdown solution without the need for
 extensive JavaScript knowledge.
 
+## Check out our [demo page](https://dxpr.github.io/CountEverest/)
+
 ## Table of Contents
 
 - [Quick Start](#quick-start)
