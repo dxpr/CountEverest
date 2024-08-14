@@ -5,7 +5,8 @@
 ![Vanilla JS](https://img.shields.io/badge/vanilla-js-yellow.svg)
 ![Size: 10 KB](https://img.shields.io/badge/size-1%20KB-brightgreen.svg)
 
-![CountEverest Demo](demo.gif)
+![counteverest-plain](https://github.com/user-attachments/assets/eb4ee579-eac9-4ecf-96f2-f98bf116606e)
+
 
 CountEverest is a lightweight, customizable countdown script that's easy to integrate into your
 projects. It offers a range of features including callback functions, left-hand zeros, and easy
@@ -106,24 +107,15 @@ After including the necessary files, you can create a countdown by following the
 
 CountEverest offers extensive customization options. Here are some examples:
 
-### Styling
+### Included styles
 
-You can customize the appearance of your countdown by modifying the CSS. For example:
+#### Flip Clock Style (Theme 10)
 
-```css
-.ce-countdown {
-  font-family: 'Arial', sans-serif;
-  font-size: 2em;
-  color: #333;
-}
+![counteverest-flip-down](https://github.com/user-attachments/assets/50697427-7fd7-42b1-9be7-a94ba03d8a17)
 
-.ce-days,
-.ce-hours,
-.ce-minutes,
-.ce-seconds {
-  font-weight: bold;
-}
-```
+#### Simple Grid Style
+
+![counteverest-grid](https://github.com/user-attachments/assets/da2b7b42-9402-4e1b-8bfe-8a6a36c44cc5)
 
 ### Custom Labels
 
