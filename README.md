@@ -25,20 +25,20 @@ CountEverest is a lightweight, customizable countdown script that's easy to inte
 
 ## Quick Start
 
-1.  Clone the repository or download the latest release:
+1. Clone the repository or download the latest release:
 
     ```
     git clone git@github.com:dxpr/CountEverest.git
     ```
 
-2.  Include the CSS and JS files in your HTML:
+2. Include the CSS and JS files in your HTML:
 
     ```
     <link rel="stylesheet" href="../dist/counteverest.min.css">
     <script src="../dist/counteverest.min.js"></script>
     ```
 
-3.  Add the countdown HTML:
+3. Add the countdown HTML:
 
     ```
     <div class="ce-countdown">
@@ -49,7 +49,7 @@ CountEverest is a lightweight, customizable countdown script that's easy to inte
     </div>
     ```
 
-4.  Initialize CountEverest:
+4. Initialize CountEverest:
 
     ```
     document.addEventListener('DOMContentLoaded', () => {
@@ -80,8 +80,8 @@ git clone git@github.com:dxpr/CountEverest.git
 
 After including the necessary files, you can create a countdown by following these steps:
 
-1.  Create the HTML structure for your countdown (see Quick Start for an example).
-2.  Initialize CountEverest with your desired options:
+1. Create the HTML structure for your countdown (see Quick Start for an example).
+2. Initialize CountEverest with your desired options:
 
     ```
     const countdown = new CountEverest(document.querySelector('.ce-countdown'), {
@@ -194,7 +194,7 @@ CountEverest instances provide the following methods:
 
 If you're migrating from the jQuery version to the new vanilla JavaScript version, here are the key changes you need to make:
 
-1.  Update your script inclusion:
+1. Update your script inclusion:
 
     ```
     <!-- Old -->
@@ -204,7 +204,7 @@ If you're migrating from the jQuery version to the new vanilla JavaScript versio
     <script src="../dist/counteverest.min.js"></script>
     ```
 
-2.  Update your initialization code:
+2. Update your initialization code:
 
     ```
     // Old
@@ -222,7 +222,7 @@ If you're migrating from the jQuery version to the new vanilla JavaScript versio
     });
     ```
 
-3.  Update any custom code that interacts with the countdown:
+3. Update any custom code that interacts with the countdown:
 
     ```
     // Old
@@ -291,12 +291,12 @@ For more examples, check out our [demo page](https://dxpr.github.io/CountEverest
 
 We welcome contributions to CountEverest! Here's how you can help:
 
-1.  Fork the repository
-2.  Create a new branch (`git checkout -b feature/AmazingFeature`)
-3.  Make your changes
-4.  Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-5.  Push to the branch (`git push origin feature/AmazingFeature`)
-6.  Open a Pull Request
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/AmazingFeature`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+5. Push to the branch (`git push origin feature/AmazingFeature`)
+6. Open a Pull Request
 
 Please make sure to update tests as appropriate and adhere to the existing coding style.
 
