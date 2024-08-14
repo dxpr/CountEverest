@@ -1,117 +1,118 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<!-- Don't forget to change the title! -->
-		<title>Theme 6 - Count Everest jQuery Plugin</title>
+    <!-- Don't forget to change the title! -->
+    <title>Theme 6 - Count Everest jQuery Plugin</title>
 
-		<!-- Load Google Fonts -->
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400">
-		
-		<!-- Load stylesheet -->
-		<link rel="stylesheet" href="../dist/counteverest.min.css">
+    <!-- Load Google Fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400" />
 
-		<!-- DEMO styles to center countdown vertically and horizontally -->
-		<style type="text/css">
-			html {
-				display: table;
-				height: 100%;
-				width: 100%;
-			}
+    <!-- Load stylesheet -->
+    <link rel="stylesheet" href="../dist/counteverest.min.css" />
 
-			body {
-				background: #31facd;
-				display: table-cell;
-				margin: 0;
-				padding: 0;
-				vertical-align: middle;
-			}
+    <!-- DEMO styles to center countdown vertically and horizontally -->
+    <style type="text/css">
+      html {
+        display: table;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+          sans-serif;
+        height: 100%;
+        width: 100%;
+      }
 
-			.ce-countdown {
-				margin: 0 auto;
-				max-width: 864px;
-				text-align: center;
-			}
-		</style>
-	</head>
-	<body>
-		
-		<!-- Nothing to change here -->
-		<div class="ce-countdown ce-countdown--theme-6">
-			<div class="ce-col">
-				<div class="ce-hours">
-					<div class="ce-flip-wrap">
-						<div class="ce-flip-front"></div>
-						<div class="ce-flip-back"></div>
-					</div>
-				</div>
-				<span class="ce-hours-label"></span>
-			</div>
-			<div class="ce-col">
-				<div class="ce-minutes">
-					<div class="ce-flip-wrap">
-						<div class="ce-flip-front"></div>
-						<div class="ce-flip-back"></div>
-					</div>
-				</div>
-				<span class="ce-minutes-label"></span>
-			</div>
-			<div class="ce-col">
-				<div class="ce-seconds">
-					<div class="ce-flip-wrap">
-						<div class="ce-flip-front"></div>
-						<div class="ce-flip-back"></div>
-					</div>
-				</div>
-				<span class="ce-seconds-label"></span>
-			</div>
-		</div>
+      body {
+        background: #31facd;
+        display: table-cell;
+        margin: 0;
+        padding: 0;
+        vertical-align: middle;
+      }
 
-		<!-- Load all necessary JavaScript files -->
-		<script src="../dist/counteverest.min.js"></script>
+      .ce-countdown {
+        margin: 0 auto;
+        max-width: 864px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Nothing to change here -->
+    <div class="ce-countdown ce-countdown--theme-6">
+      <div class="ce-col">
+        <div class="ce-hours">
+          <div class="ce-flip-wrap">
+            <div class="ce-flip-front"></div>
+            <div class="ce-flip-back"></div>
+          </div>
+        </div>
+        <span class="ce-hours-label"></span>
+      </div>
+      <div class="ce-col">
+        <div class="ce-minutes">
+          <div class="ce-flip-wrap">
+            <div class="ce-flip-front"></div>
+            <div class="ce-flip-back"></div>
+          </div>
+        </div>
+        <span class="ce-minutes-label"></span>
+      </div>
+      <div class="ce-col">
+        <div class="ce-seconds">
+          <div class="ce-flip-wrap">
+            <div class="ce-flip-front"></div>
+            <div class="ce-flip-back"></div>
+          </div>
+        </div>
+        <span class="ce-seconds-label"></span>
+      </div>
+    </div>
 
-		<!-- Init Count Everest plugin -->
-		<script>
-			document.addEventListener('DOMContentLoaded', () => {
-				const countdownElement = document.querySelector('.ce-countdown');
-				if (countdownElement) {
-					new CountEverest(countdownElement, {
-						day: 1,
-						month: 1,
-						year: 2026,
-						hoursWrapper: '.ce-hours .ce-flip-back',
-						minutesWrapper: '.ce-minutes .ce-flip-back',
-						secondsWrapper: '.ce-seconds .ce-flip-back',
-						wrapDigits: false,
-						onChange: function() {
-							countEverestAnimate(document.querySelectorAll('.ce-countdown .ce-col>div'), this);
-						}
-					});
-				}
-			});
+    <!-- Load all necessary JavaScript files -->
+    <script src="../dist/counteverest.min.js"></script>
 
-			function countEverestAnimate(elements, data) {
-				elements.forEach(function(el) {
-					const flipFront = el.querySelector('.ce-flip-front');
-					const flipBack = el.querySelector('.ce-flip-back');
-					const field = flipBack.textContent;
-					const fieldOld = el.getAttribute('data-old');
-					if (typeof fieldOld === 'undefined') {
-						el.setAttribute('data-old', field);
-					}
-					if (field != fieldOld) {
-						el.classList.add('ce-animate');
-						window.setTimeout(function() {
-							flipFront.textContent = field;
-							el.classList.remove('ce-animate');
-							el.setAttribute('data-old', field);
-						}, 800);
-					}
-				});
-			}
-		</script>
-	</body>
+    <!-- Init Count Everest plugin -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const countdownElement = document.querySelector('.ce-countdown');
+        if (countdownElement) {
+          new CountEverest(countdownElement, {
+            day: 1,
+            month: 1,
+            year: 2026,
+            hoursWrapper: '.ce-hours .ce-flip-back',
+            minutesWrapper: '.ce-minutes .ce-flip-back',
+            secondsWrapper: '.ce-seconds .ce-flip-back',
+            wrapDigits: false,
+            onChange: function () {
+              countEverestAnimate(document.querySelectorAll('.ce-countdown .ce-col>div'), this);
+            },
+          });
+        }
+      });
+
+      function countEverestAnimate(elements, data) {
+        elements.forEach(function (el) {
+          const flipFront = el.querySelector('.ce-flip-front');
+          const flipBack = el.querySelector('.ce-flip-back');
+          const field = flipBack.textContent;
+          const fieldOld = el.getAttribute('data-old');
+          if (typeof fieldOld === 'undefined') {
+            el.setAttribute('data-old', field);
+          }
+          if (field != fieldOld) {
+            el.classList.add('ce-animate');
+            window.setTimeout(function () {
+              flipFront.textContent = field;
+              el.classList.remove('ce-animate');
+              el.setAttribute('data-old', field);
+            }, 800);
+          }
+        });
+      }
+    </script>
+  </body>
 </html>

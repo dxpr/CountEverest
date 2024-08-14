@@ -1,68 +1,73 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<!-- Don't forget to change the title! -->
-		<title>Theme 1 - Count Everest jQuery Plugin</title>
-		
-		<!-- Load Google Fonts -->
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400">
-		
-		<!-- Load stylesheet -->
-		<link rel="stylesheet" href="../dist/counteverest.min.css">
+    <!-- Don't forget to change the title! -->
+    <title>Theme 1 - Count Everest jQuery Plugin</title>
 
-		<!-- DEMO styles to center countdown vertically and horizontally -->
-		<style type="text/css">
-			html {
-				display: table;
-				height: 100%;
-				width: 100%;
-			}
+    <!-- Load Google Fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400" />
 
-			body {
-				background: #eee;
-				display: table-cell;
-				margin: 0;
-				padding: 0;
-				vertical-align: middle;
-			}
+    <!-- Load stylesheet -->
+    <link rel="stylesheet" href="../dist/counteverest.min.css" />
 
-			.ce-countdown {
-				margin: 0 auto;
-				max-width: 800px;
-				text-align: center;
-			}
-		</style>
-	</head>
-	<body>
-		
-		<!-- Nothing to change here -->
-		<div class="ce-countdown ce-countdown--theme-1">
-			<div class="ce-col"><span class="ce-days"></span> <span class="ce-days-label"></span></div>
-			<div class="ce-col"><span class="ce-hours"></span> <span class="ce-hours-label"></span></div>
-			<div class="ce-col"><span class="ce-minutes"></span> <span class="ce-minutes-label"></span></div>
-			<div class="ce-col"><span class="ce-seconds"></span> <span class="ce-seconds-label"></span></div>
-		</div>
+    <!-- DEMO styles to center countdown vertically and horizontally -->
+    <style type="text/css">
+      html {
+        display: table;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+          sans-serif;
+        height: 100%;
+        width: 100%;
+      }
 
-		<!-- Load all necessary JavaScript files -->
-		<script src="../dist/counteverest.min.js"></script>
+      body {
+        background: #eee;
+        display: table-cell;
+        margin: 0;
+        padding: 0;
+        vertical-align: middle;
+      }
 
-		<!-- Init Count Everest plugin -->
-		<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const countdownElement = document.querySelector('.ce-countdown');
-    if (countdownElement) {
-        new CountEverest(countdownElement, {
+      .ce-countdown {
+        margin: 0 auto;
+        max-width: 800px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Nothing to change here -->
+    <div class="ce-countdown ce-countdown--theme-1">
+      <div class="ce-col"><span class="ce-days"></span> <span class="ce-days-label"></span></div>
+      <div class="ce-col"><span class="ce-hours"></span> <span class="ce-hours-label"></span></div>
+      <div class="ce-col">
+        <span class="ce-minutes"></span> <span class="ce-minutes-label"></span>
+      </div>
+      <div class="ce-col">
+        <span class="ce-seconds"></span> <span class="ce-seconds-label"></span>
+      </div>
+    </div>
+
+    <!-- Load all necessary JavaScript files -->
+    <script src="../dist/counteverest.min.js"></script>
+
+    <!-- Init Count Everest plugin -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const countdownElement = document.querySelector('.ce-countdown');
+        if (countdownElement) {
+          new CountEverest(countdownElement, {
             day: 1,
             month: 1,
             year: 2026,
-            pluralLabels: true
-        });
-    }
-});
-			</script>
-	</body>
+            pluralLabels: true,
+          });
+        }
+      });
+    </script>
+  </body>
 </html>
