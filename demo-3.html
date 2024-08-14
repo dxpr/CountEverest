@@ -6,10 +6,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<!-- Don't forget to change the title! -->
-		<title>Theme 5 - Count Everest jQuery Plugin</title>
+		<title>Theme 3 - Count Everest jQuery Plugin</title>
 		
 		<!-- Load Google Fonts -->
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Permanent+Marker">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:100,300">
 		
 		<!-- Load stylesheet -->
 		<link rel="stylesheet" href="css/counteverest.css">
@@ -40,24 +40,28 @@
 	<body>
 		
 		<!-- Nothing to change here -->
-		<div class="ce-countdown ce-countdown--theme-5">
-			<span class="ce-minutes"></span>:<span class="ce-seconds"></span>
+		<div class="ce-countdown ce-countdown--theme-3">
+			<div class="ce-col"><span class="ce-hours"></span> <span class="ce-hours-label"></span></div>
+			<div class="ce-col"><span class="ce-minutes"></span> <span class="ce-minutes-label"></span></div>
+			<div class="ce-col"><span class="ce-seconds"></span> <span class="ce-seconds-label"></span></div>
 		</div>
 
 		<!-- Load all necessary JavaScript files -->
-		<script src="js/vendor/jquery-1.11.2.min.js"></script>
-		<script src="js/vendor/jquery.counteverest.min.js"></script>
+		<script src="js/vendor/counteverest.js"></script>
 
 		<!-- Init Count Everest plugin -->
 		<script>
-			$(document).ready(function() {
-				$('.ce-countdown').countEverest({
-					//Set your target date here!
-					day: 1,
-					month: 1,
-					year: 2016
-				});
-			});
-		</script>
+		document.addEventListener('DOMContentLoaded', () => {
+				const countdownElement = document.querySelector('.ce-countdown');
+				if (countdownElement) {
+						new CountEverest(countdownElement, {
+								day: 1,
+								month: 1,
+								year: 2026,
+								pluralLabels: true
+						});
+				}
+		});
+      </script>
 	</body>
 </html>

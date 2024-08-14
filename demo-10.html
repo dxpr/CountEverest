@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>Theme 10 - Count Everest Plugin</title>
+
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Unica+One">
+
+		<link rel="stylesheet" href="css/counteverest.css">
+
+		<style type="text/css">
+			html {
+				display: table;
+				height: 100%;
+				width: 100%;
+			}
+
+			body {
+				background: #eee;
+				display: table-cell;
+				margin: 0;
+				padding: 0;
+				text-align: center;
+				vertical-align: middle;
+			}
+
+			.ce-countdown {
+				margin: 0 auto;
+				max-width: 800px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="ce-countdown ce-countdown--theme-10">
+			<div class="ce-unit-wrap">
+				<div class="days"></div>
+				<span class="ce-days-label"></span>
+			</div>
+			<div class="ce-unit-wrap">
+				<div class="hours"></div>
+				<span class="ce-hours-label"></span>
+			</div>
+			<div class="ce-unit-wrap">
+				<div class="minutes"></div>
+				<span class="ce-minutes-label"></span>
+			</div>
+			<div class="ce-unit-wrap">
+				<div class="seconds"></div>
+				<span class="ce-seconds-label"></span>
+			</div>
+		</div>
+
+		<script src="js/vendor/counteverest.js"></script>
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				const countdownElement = document.querySelector('.ce-countdown');
+				let firstCalculation = true;
+
+				if (countdownElement) {
+					new CountEverest(countdownElement, {
+						day: 30,
+						month: 6,
+						year: 2026,
+						leftHandZeros: true,
+						afterCalculation: function() {
+							const units = {
+								days: this.days,
+								hours: this.hours,
+								minutes: this.minutes,
+								seconds: this.seconds
+							};
+
+							if (firstCalculation) {
+								firstCalculation = false;
+								Object.entries(units).forEach(([unit, value]) => {
+									const unitElement = countdownElement.querySelector(`.${unit}`);
+									if (!unitElement) return;
+									let dig = '';
+									for (let i = 0; i < value.toString().length; i++) {
+										dig += `
+											<div class="digits">
+												${Array.from({ length: 10 }, (_, i) => `
+													<div class="digits-inner">
+														<div class="flip-wrap">
+															<div class="up">
+																<div class="shadow"></div>
+																<div class="inn">${i}</div>
+															</div>
+															<div class="down">
+																<div class="shadow"></div>
+																<div class="inn">${i}</div>
+															</div>
+														</div>
+													</div>
+												`).join('')}
+											</div>`;
+									}
+									unitElement.innerHTML = dig;
+								});
+							}
+
+							Object.entries(units).forEach(([unit, value]) => {
+								const unitElement = countdownElement.querySelector(`.${unit}`);
+								if (!unitElement) return;
+								const digitCount = unitElement.querySelectorAll('.digits').length;
+								const paddedValue = this.strPad(value.toString(), digitCount, '0');
+
+								for (let i = 0; i < paddedValue.length; i++) {
+									const digitsWrap = unitElement.querySelector(`.digits:nth-child(${i + 1})`);
+									if (!digitsWrap) continue;
+									const digit = parseInt(paddedValue[i]);
+									const allDigitsInner = digitsWrap.querySelectorAll('.digits-inner');
+
+									allDigitsInner.forEach((el, index) => {
+										el.classList.remove('active', 'before');
+										if (index === digit) {
+											el.classList.add('active');
+										} else if (index === (digit + 1) % 10) {
+											el.classList.add('before');
+										}
+									});
+
+									if (digitsWrap.querySelector('.before')) {
+										digitsWrap.classList.add('play');
+									} else {
+										digitsWrap.classList.remove('play');
+									}
+								}
+							});
+						}
+					});
+				}
+			});
+		</script>
+	</body>
+</html>

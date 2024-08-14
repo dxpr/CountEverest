@@ -72,24 +72,25 @@
 		</div>
 
 		<!-- Load all necessary JavaScript files -->
-		<script src="js/vendor/jquery-1.11.2.min.js"></script>
-		<script src="js/vendor/jquery.counteverest.min.js"></script>
+		<script src="js/vendor/counteverest.js"></script>
 
 		<!-- Init Count Everest plugin -->
 		<script>
-			$(document).ready(function() {
-				$('.ce-countdown').countEverest({
-					//Set your target date here!
-					day: 1,
-					month: 1,
-					year: 2017
-				});
-
-				//Fallback for Internet Explorer
-				if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
-					$('html').addClass('ce-ie');
+		document.addEventListener('DOMContentLoaded', () => {
+				const countdownElement = document.querySelector('.ce-countdown');
+				if (countdownElement) {
+						new CountEverest(countdownElement, {
+								day: 1,
+								month: 1,
+								year: 2026
+						});
 				}
-			});
+
+				// Fallback for Internet Explorer
+				if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
+						document.documentElement.classList.add('ce-ie');
+				}
+		});
 		</script>
 	</body>
 </html>

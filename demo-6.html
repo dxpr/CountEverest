@@ -71,53 +71,47 @@
 		</div>
 
 		<!-- Load all necessary JavaScript files -->
-		<script src="js/vendor/jquery-1.11.2.min.js"></script>
-		<script src="js/vendor/jquery.counteverest.min.js"></script>
+		<script src="js/vendor/counteverest.js"></script>
 
 		<!-- Init Count Everest plugin -->
 		<script>
-			$(document).ready(function() {
-				$('.ce-countdown').countEverest({
-					//Set your target date here!
-					day: 1,
-					month: 1,
-					year: 2016,
-					hoursWrapper: '.ce-hours .ce-flip-back',
-					minutesWrapper: '.ce-minutes .ce-flip-back',
-					secondsWrapper: '.ce-seconds .ce-flip-back',
-					wrapDigits: false,
-					onChange: function() {
-						countEverestAnimate($('.ce-countdown .ce-col>div'), this);
-					}
-				});
-
-				function countEverestAnimate($el, data) {
-					$el.each( function(index) {
-						var $this = $(this),
-							$flipFront = $this.find('.ce-flip-front'),
-							$flipBack = $this.find('.ce-flip-back'),
-							field = $flipBack.text(),
-							fieldOld = $this.attr('data-old');
-						if (typeof fieldOld === 'undefined') {
-							$this.attr('data-old', field);
-						}
-						if (field != fieldOld) {
-							$this.addClass('ce-animate');
-							window.setTimeout(function() {
-								$flipFront.text(field);
-								$this
-									.removeClass('ce-animate')
-									.attr('data-old', field);
-							}, 800);
+			document.addEventListener('DOMContentLoaded', () => {
+				const countdownElement = document.querySelector('.ce-countdown');
+				if (countdownElement) {
+					new CountEverest(countdownElement, {
+						day: 1,
+						month: 1,
+						year: 2026,
+						hoursWrapper: '.ce-hours .ce-flip-back',
+						minutesWrapper: '.ce-minutes .ce-flip-back',
+						secondsWrapper: '.ce-seconds .ce-flip-back',
+						wrapDigits: false,
+						onChange: function() {
+							countEverestAnimate(document.querySelectorAll('.ce-countdown .ce-col>div'), this);
 						}
 					});
 				}
-
-				//Fallback for Internet Explorer
-				if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
-					$('html').addClass('ce-ie');
-				}
 			});
+
+			function countEverestAnimate(elements, data) {
+				elements.forEach(function(el) {
+					const flipFront = el.querySelector('.ce-flip-front');
+					const flipBack = el.querySelector('.ce-flip-back');
+					const field = flipBack.textContent;
+					const fieldOld = el.getAttribute('data-old');
+					if (typeof fieldOld === 'undefined') {
+						el.setAttribute('data-old', field);
+					}
+					if (field != fieldOld) {
+						el.classList.add('ce-animate');
+						window.setTimeout(function() {
+							flipFront.textContent = field;
+							el.classList.remove('ce-animate');
+							el.setAttribute('data-old', field);
+						}, 800);
+					}
+				});
+			}
 		</script>
 	</body>
 </html>

@@ -47,49 +47,48 @@
 		</div>
 
 		<!-- Load all necessary JavaScript files -->
-		<script src="js/vendor/jquery-1.11.2.min.js"></script>
-		<script src="js/vendor/jquery.counteverest.min.js"></script>
+		<script src="js/vendor/counteverest.js"></script>
 
 		<!-- Init Count Everest plugin -->
 		<script>
-			$(document).ready(function() {
-
-				$('.ce-countdown').countEverest({
-					//Set your target date here!
-					day: 1,
-					month: 1,
-					year: 2016,
-					onChange: function() {
-						countEverestAnimate($('.ce-digits span'));
-					}
-				});
-
-				function countEverestAnimate($el) {
-					$el.each( function() {
-						var $this = $(this),
-							fieldText = $this.text(),
-							fieldData = $this.attr('data-value'),
-							fieldOld = $this.attr('data-old');
-
-						if (typeof fieldOld === 'undefined') {
-							$this.attr('data-old', fieldText);
-						}
-
-						if (fieldText != fieldData) {
-							$this
-								.attr('data-value', fieldText)
-								.attr('data-old', fieldData)
-								.addClass('ce-animate');
-
-							window.setTimeout(function() {
-								$this
-									.removeClass('ce-animate')
-									.attr('data-old', fieldText);
-							}, 300);
+			document.addEventListener('DOMContentLoaded', () => {
+				const countdownElement = document.querySelector('.ce-countdown');
+				if (countdownElement) {
+					new CountEverest(countdownElement, {
+						day: 1,
+						month: 1,
+						year: 2026,
+						onChange: function() {
+							countEverestAnimate(document.querySelectorAll('.ce-digits span'));
 						}
 					});
 				}
 			});
+
+			function countEverestAnimate(elements) {
+				elements.forEach(function(el) {
+					const fieldText = el.textContent;
+					const fieldData = el.getAttribute('data-value');
+					const fieldOld = el.getAttribute('data-old');
+
+					if (typeof fieldOld === 'undefined') {
+						el.setAttribute('data-old', fieldText);
+					}
+
+					if (fieldText != fieldData) {
+						el
+							.setAttribute('data-value', fieldText)
+							.setAttribute('data-old', fieldData)
+							.classList.add('ce-animate');
+
+						window.setTimeout(function() {
+							el
+								.classList.remove('ce-animate')
+								.setAttribute('data-old', fieldText);
+						}, 300);
+					}
+				});
+			}
 		</script>
 	</body>
 </html>
