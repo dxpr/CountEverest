@@ -1,122 +1,120 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<!-- Don't forget to change the title! -->
-		<title>Theme 9 - Count Everest jQuery Plugin</title>
-		
-		<!-- Load Google Fonts -->
-		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300">
-		
-		<!-- Load stylesheet -->
-		<link rel="stylesheet" href="../dist/counteverest.min.css">
+    <!-- Don't forget to change the title! -->
+    <title>Theme 9 - Count Everest jQuery Plugin</title>
 
-		<!-- DEMO styles to center countdown vertically and horizontally -->
-		<style type="text/css">
-			html {
-				display: table;
-				height: 100%;
-				width: 100%;
-			}
+    <!-- Load Google Fonts -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300" />
 
-			body {
-				background: #000;
-				display: table-cell;
-				margin: 0;
-				padding: 0;
-				vertical-align: middle;
-			}
+    <!-- Load stylesheet -->
+    <link rel="stylesheet" href="../dist/counteverest.min.css" />
 
-			.ce-countdown {
-				margin: 0 auto;
-				max-width: 800px;
-			}
-		</style>
-	</head>
-	<body>
-		
-		<!-- Nothing to change here -->
-		<div class="ce-countdown ce-countdown--theme-9">
-			<div class="ce-circle">
-				<canvas id="ce-days" width="408" height="408"></canvas>
-				<div class="ce-circle__values">
-					<span class="ce-digit ce-days"></span>
-					<span class="ce-label ce-days-label"></span>
-				</div>
-			</div>
-			<div class="ce-circle">
-				<canvas id="ce-hours" width="408" height="408"></canvas>
-				<div class="ce-circle__values">
-					<span class="ce-digit ce-hours"></span>
-					<span class="ce-label ce-hours-label"></span>
-				</div>
-			</div>
-			<div class="ce-circle">
-				<canvas id="ce-minutes" width="408" height="408"></canvas>
-				<div class="ce-circle__values">
-					<span class="ce-digit ce-minutes"></span>
-					<span class="ce-label ce-minutes-label"></span>
-				</div>
-			</div>
-			<div class="ce-circle">
-				<canvas id="ce-seconds" width="408" height="408"></canvas>
-				<div class="ce-circle__values">
-					<span class="ce-digit ce-seconds"></span>
-					<span class="ce-label ce-seconds-label"></span>
-				</div>
-			</div>
-		</div>
+    <!-- DEMO styles to center countdown vertically and horizontally -->
+    <style type="text/css">
+      html {
+        display: table;
+        height: 100%;
+        width: 100%;
+      }
 
-		<!-- Load all necessary JavaScript files -->
-		<script src="../dist/counteverest.min.js"></script>
+      body {
+        display: table-cell;
+        margin: 0;
+        padding: 0;
+        vertical-align: middle;
+      }
 
-		<!-- Init Count Everest plugin -->
-		<script>
-			document.addEventListener('DOMContentLoaded', () => {
-				const countdownElement = document.querySelector('.ce-countdown');
-				if (countdownElement) {
-					new CountEverest(countdownElement, {
-						day: 30,
-						month: 6,
-						year: 2026,
-						leftHandZeros: false,
-						onChange: function() {
-							drawCircle(document.getElementById('ce-days'), this.days, 365);
-							drawCircle(document.getElementById('ce-hours'), this.hours, 24);
-							drawCircle(document.getElementById('ce-minutes'), this.minutes, 60);
-							drawCircle(document.getElementById('ce-seconds'), this.seconds, 60);
-						}
-					});
-				}
-			});
+      .ce-countdown {
+        margin: 0 auto;
+        max-width: 800px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Nothing to change here -->
+    <div class="ce-countdown ce-countdown--theme-9">
+      <div class="ce-circle">
+        <canvas id="ce-days" width="408" height="408"></canvas>
+        <div class="ce-circle__values">
+          <span class="ce-digit ce-days"></span>
+          <span class="ce-label ce-days-label"></span>
+        </div>
+      </div>
+      <div class="ce-circle">
+        <canvas id="ce-hours" width="408" height="408"></canvas>
+        <div class="ce-circle__values">
+          <span class="ce-digit ce-hours"></span>
+          <span class="ce-label ce-hours-label"></span>
+        </div>
+      </div>
+      <div class="ce-circle">
+        <canvas id="ce-minutes" width="408" height="408"></canvas>
+        <div class="ce-circle__values">
+          <span class="ce-digit ce-minutes"></span>
+          <span class="ce-label ce-minutes-label"></span>
+        </div>
+      </div>
+      <div class="ce-circle">
+        <canvas id="ce-seconds" width="408" height="408"></canvas>
+        <div class="ce-circle__values">
+          <span class="ce-digit ce-seconds"></span>
+          <span class="ce-label ce-seconds-label"></span>
+        </div>
+      </div>
+    </div>
 
-			function deg(v) {
-				return (Math.PI/180) * v - (Math.PI/2);
-			}
+    <!-- Load all necessary JavaScript files -->
+    <script src="../dist/counteverest.min.js"></script>
 
-			function drawCircle(canvas, value, max) {
-				const primaryColor = '#117d8b';
-				const secondaryColor = '#282828';
-				const circle = canvas.getContext('2d');
-				
-				circle.clearRect(0, 0, canvas.width, canvas.height);
-				circle.lineWidth = 8;
+    <!-- Init Count Everest plugin -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const countdownElement = document.querySelector('.ce-countdown');
+        if (countdownElement) {
+          new CountEverest(countdownElement, {
+            day: 30,
+            month: 6,
+            year: 2026,
+            leftHandZeros: false,
+            onChange: function () {
+              drawCircle(document.getElementById('ce-days'), this.days, 365);
+              drawCircle(document.getElementById('ce-hours'), this.hours, 24);
+              drawCircle(document.getElementById('ce-minutes'), this.minutes, 60);
+              drawCircle(document.getElementById('ce-seconds'), this.seconds, 60);
+            },
+          });
+        }
+      });
 
-				// Draw secondary circle
-				circle.beginPath();
-				circle.arc(204, 204, 190, 0, 2 * Math.PI);
-				circle.strokeStyle = secondaryColor;
-				circle.stroke();
+      function deg(v) {
+        return (Math.PI / 180) * v - Math.PI / 2;
+      }
 
-				// Draw primary circle
-				circle.beginPath();
-				circle.strokeStyle = primaryColor;
-				circle.arc(204, 204, 190, deg(0), deg(360 / max * value));
-				circle.stroke();
-			}
-		</script>
-	</body>
+      function drawCircle(canvas, value, max) {
+        const primaryColor = '#117d8b';
+        const secondaryColor = '#282828';
+        const circle = canvas.getContext('2d');
+
+        circle.clearRect(0, 0, canvas.width, canvas.height);
+        circle.lineWidth = 8;
+
+        // Draw secondary circle
+        circle.beginPath();
+        circle.arc(204, 204, 190, 0, 2 * Math.PI);
+        circle.strokeStyle = secondaryColor;
+        circle.stroke();
+
+        // Draw primary circle
+        circle.beginPath();
+        circle.strokeStyle = primaryColor;
+        circle.arc(204, 204, 190, deg(0), deg((360 / max) * value));
+        circle.stroke();
+      }
+    </script>
+  </body>
 </html>
