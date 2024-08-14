@@ -51,7 +51,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "browserslist": [
-    ">0.2%",
+    ">1%",
     "not dead",
     "not op_mini all"
   ],

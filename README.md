@@ -1,6 +1,6 @@
 # CountEverest
 
-![Version 3.0.0](https://img.shields.io/badge/version-3.0.0-blue.svg) ![License: GPL v2](https://img.shields.io/badge/license-GPL%20v2-green.svg) ![Vanilla JS](https://img.shields.io/badge/vanilla-js-yellow.svg) ![Size: 10 KB](https://img.shields.io/badge/size-10%20KB-brightgreen.svg)
+![Version 3.0.0](https://img.shields.io/badge/version-3.0.0-blue.svg) ![License: GPL v2](https://img.shields.io/badge/license-GPL%20v2-green.svg) ![Vanilla JS](https://img.shields.io/badge/vanilla-js-yellow.svg) ![Size: 10 KB](https://img.shields.io/badge/size-4%20KB-brightgreen.svg)
 
 ![CountEverest Demo](demo.gif)
 

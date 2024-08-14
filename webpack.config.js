@@ -46,6 +46,7 @@ module.exports = (env, argv) => {
       minimizer: [
         new TerserPlugin({
           terserOptions: {
+            ecma: 2018,
             format: {
               comments: false,
             },
