@@ -144,7 +144,6 @@ Configure your countdown using data attributes:
 
 - `data-ce-count-up="true"` - Count up from target date instead of down
 - `data-ce-singular-labels="false"` - Disable singular labels (e.g., "1 Day" vs "1 Days")
-- `data-ce-time-zone="-5"` - Timezone offset (-12 to 14)
 
 #### Label Customization
 
@@ -192,29 +191,134 @@ initialization.
 
 ## Customization
 
-CountEverest offers extensive customization options. Here are some examples:
+CountEverest offers extensive customization options with several built-in themes to match
+different design needs.
 
-### Included styles
+### Available Themes
 
-#### Simple Grid Style (Theme 1)
+CountEverest includes multiple pre-designed themes that you can use by adding the
+appropriate CSS class to your countdown element. Each theme has its own unique visual style and
+behavior.
+
+#### Default Theme (No class needed)
+
+The most basic theme with simple text styling. Numbers and labels are displayed inline with
+minimal formatting. Perfect for subtle integrations where you want the countdown to blend
+seamlessly with your existing content.
+
+**Usage:** Simply don't add any theme class to your countdown element.
+
+```html
+<div class="ce-countdown" data-ce-auto data-ce-year="2027"></div>
+```
+
+#### Theme 1: Simple Grid Layout (`ce-countdown--theme-1`)
 
 ![counteverest-grid](https://github.com/user-attachments/assets/da2b7b42-9402-4e1b-8bfe-8a6a36c44cc5)
 
-#### Simple Color Blocks Style (Theme 6)
+A clean, organized layout where each time unit (days, hours, minutes, seconds) is displayed
+in its own column. Numbers appear above their corresponding labels with clear separation between
+units. This theme works well for professional websites and landing pages where clarity is
+important.
+
+**Best for:** Landing pages, event announcements, professional websites
+**Features:** Grid-based layout, clear visual separation, responsive design
+
+```html
+<div class="ce-countdown ce-countdown--theme-1" data-ce-auto data-ce-year="2027"></div>
+```
+
+#### Theme 6: Animated Color Blocks (`ce-countdown--theme-6`)
 
 ![counteverest-colorblocks](https://github.com/user-attachments/assets/f98eb165-fa1b-4098-b607-5dda5759ec95)
 
-#### Circles Style (Theme 9)
+Eye-catching colored blocks with smooth flip animations when numbers change. Each time unit is
+displayed in a colorful rectangular block with the number prominently featured. The blocks
+animate with a satisfying flip effect every time the countdown updates.
+
+**Best for:** Product launches, sales countdowns, marketing campaigns
+**Features:** Flip animations, customizable accent colors, high visual impact
+**Supports accentColor:** Yes - changes the background color of the blocks
+
+```html
+<div
+  class="ce-countdown ce-countdown--theme-6"
+  data-ce-auto
+  data-ce-year="2027"
+  data-ce-accent-color="#E91E63"
+></div>
+```
+
+#### Theme 9: Minimalist Circles (`ce-countdown--theme-9`)
 
 ![counteverest-circles](https://github.com/user-attachments/assets/9154a576-2b98-47b6-a82a-8cf7d9973e6c)
 
-#### Flip Clock Style (Theme 10)
+Elegant circular progress indicators that visually represent the remaining time. Each time
+unit is displayed inside a circle with a progress arc that shows how much time is left in that
+unit. The circles animate smoothly as time progresses.
+
+**Best for:** Modern websites, dashboards, mobile apps, minimalist designs
+**Features:** Circular progress visualization, smooth animations, space-efficient
+**Supports accentColor:** Yes - changes the color of the progress arcs and text
+
+```html
+<div
+  class="ce-countdown ce-countdown--theme-9"
+  data-ce-auto
+  data-ce-year="2027"
+  data-ce-accent-color="#2196F3"
+></div>
+```
+
+#### Theme 10: Retro Flip Clock (`ce-countdown--theme-10`)
 
 ![counteverest-flip-down](https://github.com/user-attachments/assets/50697427-7fd7-42b1-9be7-a94ba03d8a17)
 
-#### Minimal Style For Background Video/Image (Theme 12)
+A nostalgic flip clock design reminiscent of classic airport departure boards and vintage
+alarm clocks. Individual digits flip with realistic 3D animations, creating a satisfying
+mechanical feel. Each digit rotates through a complete flip animation when changing.
+
+**Best for:** Retro themes, creative portfolios, event websites, nostalgic designs
+**Features:** 3D flip animations, realistic physics, individual digit control
+**Note:** Does not support custom accent colors (uses theme-specific styling)
+
+```html
+<div class="ce-countdown ce-countdown--theme-10" data-ce-auto data-ce-year="2027"></div>
+```
+
+#### Theme 12: Overlay Style for Media Backgrounds (`ce-countdown--theme-12`)
 
 ![counteverest-bgvideo](https://github.com/user-attachments/assets/eca809f7-09bc-4e0e-b43b-83afc05f41ce)
+
+Designed specifically for overlaying on background videos or images. Features large, bold
+digits with subtle styling that stands out against media backgrounds without being overwhelming.
+The text is optimized for readability over various background types.
+
+**Best for:** Video backgrounds, hero sections, image overlays, full-screen designs
+**Features:** High contrast text, media-optimized styling, large readable digits
+**Supports accentColor:** Yes - changes text color and digit border color
+
+```html
+<div
+  class="ce-countdown ce-countdown--theme-12"
+  data-ce-auto
+  data-ce-year="2027"
+  data-ce-accent-color="#FFFFFF"
+></div>
+```
+
+### Choosing the Right Theme
+
+- **Default/Theme 1**: Use for subtle, professional presentations
+- **Theme 6**: Perfect for marketing and sales with high visual impact
+- **Theme 9**: Ideal for modern, clean designs and dashboards
+- **Theme 10**: Great for creative and retro-themed projects
+- **Theme 12**: Essential for video backgrounds and media-rich designs
+
+### Custom Styling
+
+All themes can be further customized with CSS. The `accentColor` option provides easy color
+customization for supported themes, but you can also override any styling with custom CSS rules.
 
 ### Custom Labels
 
@@ -245,7 +349,6 @@ Here's a comprehensive list of options you can use to customize CountEverest:
 | second         | Number  | 0                              | Target second (0-59)         |
 | accentColor    | String  | `'#284ED8'`                    | Color for themes 6, 9, 12    |
 | units          | Array   | `[days,hours,minutes,seconds]` | Time units to show           |
-| timeZone       | Number  | null                           | Timezone offset (-12 to 14)  |
 | countUp        | Boolean | false                          | Count up instead of down     |
 | singularLabels | Boolean | true                           | Use singular when value is 1 |
 | yearsLabel     | String  | 'Years'                        | Plural label for years       |

@@ -18,10 +18,7 @@ class CountEverest {
       hour: 0,
       minute: 0,
       second: 0,
-      millisecond: 0,
-      timeZone: null,
       countUp: false,
-      currentDateTime: null,
       singularLabels: true,
       yearsLabel: 'Years',
       yearLabel: 'Year',
@@ -595,7 +592,7 @@ class CountEverest {
     });
 
     // Parse numeric attributes
-    const numericAttrs = ['timeZone'];
+    const numericAttrs = [];
     numericAttrs.forEach((attr) => {
       const value = element.dataset[`ce${attr.charAt(0).toUpperCase() + attr.slice(1)}`];
       if (value !== undefined) {
