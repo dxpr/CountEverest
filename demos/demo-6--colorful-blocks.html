@@ -33,50 +33,17 @@
 
       .ce-countdown {
         margin: 0 auto;
-        max-width: 864px;
         text-align: center;
       }
     </style>
   </head>
   <body>
     <!-- Nothing to change here -->
-    <div class="ce-countdown ce-countdown--theme-6">
-      <div class="ce-col">
-        <div class="ce-days">
-          <div class="ce-flip-wrap">
-            <div class="ce-flip-front"></div>
-            <div class="ce-flip-back"></div>
-          </div>
-        </div>
-        <span class="ce-days-label"></span>
-      </div>
-      <div class="ce-col">
-        <div class="ce-hours">
-          <div class="ce-flip-wrap">
-            <div class="ce-flip-front"></div>
-            <div class="ce-flip-back"></div>
-          </div>
-        </div>
-        <span class="ce-hours-label"></span>
-      </div>
-      <div class="ce-col">
-        <div class="ce-minutes">
-          <div class="ce-flip-wrap">
-            <div class="ce-flip-front"></div>
-            <div class="ce-flip-back"></div>
-          </div>
-        </div>
-        <span class="ce-minutes-label"></span>
-      </div>
-      <div class="ce-col">
-        <div class="ce-seconds">
-          <div class="ce-flip-wrap">
-            <div class="ce-flip-front"></div>
-            <div class="ce-flip-back"></div>
-          </div>
-        </div>
-        <span class="ce-seconds-label"></span>
-      </div>
+    <div class="ce-countdown-wrap--theme-6">
+      <div
+        class="ce-countdown ce-countdown--theme-6 ce-clearfix"
+        data-ce-units="days,hours,minutes,seconds"
+      ></div>
     </div>
 
     <!-- Load all necessary JavaScript files -->
@@ -87,41 +54,14 @@
       document.addEventListener('DOMContentLoaded', () => {
         const countdownElement = document.querySelector('.ce-countdown');
         if (countdownElement) {
+          // Theme-specific functionality is now handled automatically by the CountEverest plugin!
           new CountEverest(countdownElement, {
             day: 1,
             month: 1,
             year: 2026,
-            daysWrapper: '.ce-days .ce-flip-back',
-            hoursWrapper: '.ce-hours .ce-flip-back',
-            minutesWrapper: '.ce-minutes .ce-flip-back',
-            secondsWrapper: '.ce-seconds .ce-flip-back',
-            wrapDigits: false,
-            onChange: function () {
-              countEverestAnimate(document.querySelectorAll('.ce-countdown .ce-col>div'), this);
-            },
           });
         }
       });
-
-      function countEverestAnimate(elements, data) {
-        elements.forEach(function (el) {
-          const flipFront = el.querySelector('.ce-flip-front');
-          const flipBack = el.querySelector('.ce-flip-back');
-          const field = flipBack.textContent;
-          const fieldOld = el.getAttribute('data-old');
-          if (typeof fieldOld === 'undefined') {
-            el.setAttribute('data-old', field);
-          }
-          if (field != fieldOld) {
-            el.classList.add('ce-animate');
-            window.setTimeout(function () {
-              flipFront.textContent = field;
-              el.classList.remove('ce-animate');
-              el.setAttribute('data-old', field);
-            }, 800);
-          }
-        });
-      }
     </script>
   </body>
 </html>

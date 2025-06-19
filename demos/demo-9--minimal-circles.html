@@ -33,41 +33,17 @@
 
       .ce-countdown {
         margin: 0 auto;
-        max-width: 800px;
+        text-align: center;
       }
     </style>
   </head>
   <body>
     <!-- Nothing to change here -->
-    <div class="ce-countdown ce-countdown--theme-9">
-      <div class="ce-circle">
-        <canvas id="ce-days" width="408" height="408"></canvas>
-        <div class="ce-circle__values">
-          <span class="ce-digit ce-days"></span>
-          <span class="ce-label ce-days-label"></span>
-        </div>
-      </div>
-      <div class="ce-circle">
-        <canvas id="ce-hours" width="408" height="408"></canvas>
-        <div class="ce-circle__values">
-          <span class="ce-digit ce-hours"></span>
-          <span class="ce-label ce-hours-label"></span>
-        </div>
-      </div>
-      <div class="ce-circle">
-        <canvas id="ce-minutes" width="408" height="408"></canvas>
-        <div class="ce-circle__values">
-          <span class="ce-digit ce-minutes"></span>
-          <span class="ce-label ce-minutes-label"></span>
-        </div>
-      </div>
-      <div class="ce-circle">
-        <canvas id="ce-seconds" width="408" height="408"></canvas>
-        <div class="ce-circle__values">
-          <span class="ce-digit ce-seconds"></span>
-          <span class="ce-label ce-seconds-label"></span>
-        </div>
-      </div>
+    <div class="ce-countdown-wrap--theme-9">
+      <div
+        class="ce-countdown ce-countdown--theme-9"
+        data-ce-units="days,hours,minutes,seconds"
+      ></div>
     </div>
 
     <!-- Load all necessary JavaScript files -->
@@ -79,44 +55,12 @@
         const countdownElement = document.querySelector('.ce-countdown');
         if (countdownElement) {
           new CountEverest(countdownElement, {
-            day: 30,
-            month: 6,
+            day: 1,
+            month: 1,
             year: 2026,
-            leftHandZeros: false,
-            onChange: function () {
-              drawCircle(document.getElementById('ce-days'), this.days, 365);
-              drawCircle(document.getElementById('ce-hours'), this.hours, 24);
-              drawCircle(document.getElementById('ce-minutes'), this.minutes, 60);
-              drawCircle(document.getElementById('ce-seconds'), this.seconds, 60);
-            },
           });
         }
       });
-
-      function deg(v) {
-        return (Math.PI / 180) * v - Math.PI / 2;
-      }
-
-      function drawCircle(canvas, value, max) {
-        const primaryColor = '#117d8b';
-        const secondaryColor = '#282828';
-        const circle = canvas.getContext('2d');
-
-        circle.clearRect(0, 0, canvas.width, canvas.height);
-        circle.lineWidth = 8;
-
-        // Draw secondary circle
-        circle.beginPath();
-        circle.arc(204, 204, 190, 0, 2 * Math.PI);
-        circle.strokeStyle = secondaryColor;
-        circle.stroke();
-
-        // Draw primary circle
-        circle.beginPath();
-        circle.strokeStyle = primaryColor;
-        circle.arc(204, 204, 190, deg(0), deg((360 / max) * value));
-        circle.stroke();
-      }
     </script>
   </body>
 </html>

@@ -3,14 +3,14 @@
 ![Version 3.1.0](https://img.shields.io/badge/version-3.1.0-blue.svg)
 ![License: GPL v2](https://img.shields.io/badge/license-GPL%20v2-green.svg)
 ![Vanilla JS](https://img.shields.io/badge/vanilla-js-yellow.svg)
-![Size: 10 KB](https://img.shields.io/badge/size-1%20KB-brightgreen.svg)
+![Size: 9.7 KiB](https://img.shields.io/badge/size-9.7%20KiB-brightgreen.svg)
 
 ![counteverest-plain](https://github.com/user-attachments/assets/eb4ee579-eac9-4ecf-96f2-f98bf116606e)
 
-CountEverest is a lightweight, customizable countdown script that's easy to integrate into your
-projects. It offers a range of features including callback functions, left-hand zeros, easy
-localization, and automatic initialization when scrolling into view. Perfect for developers who
-want a flexible countdown solution without the need for extensive JavaScript knowledge.
+CountEverest is a lightweight, customizable, and dependency-free countdown script. It's designed
+for ease of use, automatically generating all necessary HTML and initializing timers when they
+scroll into view. It's the perfect zero-config solution for developers who want a flexible
+countdown without writing any JavaScript.
 
 ## Check out our [demo page](https://dxpr.github.io/CountEverest/)
 
@@ -18,7 +18,6 @@ want a flexible countdown solution without the need for extensive JavaScript kno
 
 - [Quick Start](#quick-start)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Auto-Initialization (New in 3.1.0)](#auto-initialization-new-in-310)
 - [Customization](#customization)
 - [Options](#options)
@@ -33,93 +32,91 @@ want a flexible countdown solution without the need for extensive JavaScript kno
 
 ## Quick Start
 
-1. Clone the repository or download the latest release:
+1.  Clone the repository or download the latest release:
 
-   ```bash
-   git clone git@github.com:dxpr/CountEverest.git
-   ```
+    ```bash
+    git clone git@github.com:dxpr/CountEverest.git
+    ```
 
-2. Include the CSS and JS files in your HTML:
+2.  Include the CSS and JS files in your HTML:
 
-   ```html
-   <link rel="stylesheet" href="../dist/counteverest.min.css" />
-   <script src="../dist/counteverest.min.js"></script>
-   ```
+    ```html
+    <link rel="stylesheet" href="../dist/counteverest.min.css" />
+    <script src="../dist/counteverest.min.js"></script>
+    ```
 
-3. Add the countdown HTML:
+3.  Add the countdown HTML:
 
-   ```html
-   <div class="ce-countdown">
-     <span class="ce-days"></span> <span class="ce-days-label"></span>
-     <span class="ce-hours"></span> <span class="ce-hours-label"></span>
-     <span class="ce-minutes"></span> <span class="ce-minutes-label"></span>
-     <span class="ce-seconds"></span> <span class="ce-seconds-label"></span>
-   </div>
-   ```
+    ```html
+    <div
+      class="ce-countdown"
+      data-ce-auto
+      data-ce-year="2027"
+      data-ce-month="12"
+      data-ce-day="31"
+    ></div>
+    ```
 
-4. Initialize CountEverest:
+That's it! The script will automatically detect the element, generate the required HTML for the
+countdown, and start the timer when it becomes visible on the page.
 
-   ```javascript
-   document.addEventListener('DOMContentLoaded', () => {
-     const countdownElement = document.querySelector('.ce-countdown');
-     if (countdownElement) {
-       new CountEverest(countdownElement, {
-         day: 1,
-         month: 1,
-         year: 2026,
-       });
-     }
-   });
-   ```
+To use a specific theme, just add the theme class:
+
+```html
+<div
+  class="ce-countdown ce-countdown--theme-6"
+  data-ce-auto
+  data-ce-year="2027"
+  data-ce-month="12"
+  data-ce-day="31"
+></div>
+```
 
 ## Installation
 
-### Direct Download
+While auto-initialization is recommended, you can still initialize the plugin manually if you need
+more control.
 
-Download the `counteverest.js` and `counteverest.min.css` files from the
-[releases page](https://github.com/dxpr/CountEverest/releases) and include them in your project.
+1.  Include the CSS and JS files in your HTML (see Quick Start).
+2.  Add an empty `div` where you want the countdown to appear.
 
-### Git Clone
+    ```html
+    <div class="my-countdown"></div>
+    ```
 
-```bash
-git clone git@github.com:dxpr/CountEverest.git
-```
+3.  Initialize CountEverest with your desired options:
 
-## Usage
-
-After including the necessary files, you can create a countdown by following these steps:
-
-1. Create the HTML structure for your countdown (see Quick Start for an example).
-2. Initialize CountEverest with your desired options:
-
-   ```javascript
-   const countdown = new CountEverest(document.querySelector('.ce-countdown'), {
-     day: 25,
-     month: 12,
-     year: 2023,
-     hour: 0,
-     minute: 0,
-     second: 0,
-   });
-   ```
+    ```javascript
+    document.addEventListener('DOMContentLoaded', () => {
+      const countdownElement = document.querySelector('.my-countdown');
+      if (countdownElement) {
+        new CountEverest(countdownElement, {
+          year: 2027,
+          month: 12,
+          day: 31,
+        });
+      }
+    });
+    ```
 
 ## Auto-Initialization (New in 3.1.0)
 
 CountEverest now supports automatic initialization of countdown timers when they scroll into view,
-eliminating the need for custom JavaScript in many cases. This feature uses the Intersection
-Observer API for optimal performance.
+eliminating the need for custom JavaScript. This feature uses the Intersection Observer API for
+optimal performance and automatically generates the countdown's HTML structure.
 
 ### Basic Auto-Initialization
 
 Simply add the `data-ce-auto` attribute to your countdown element along with the target date:
 
 ```html
-<div class="ce-countdown" data-ce-auto data-ce-year="2025" data-ce-month="12" data-ce-day="31">
-  <span class="ce-days"></span> <span class="ce-days-label"></span> <span class="ce-hours"></span>
-  <span class="ce-hours-label"></span> <span class="ce-minutes"></span>
-  <span class="ce-minutes-label"></span> <span class="ce-seconds"></span>
-  <span class="ce-seconds-label"></span>
-</div>
+<div
+  class="ce-countdown"
+  data-ce-auto
+  data-ce-year="2027"
+  data-ce-month="12"
+  data-ce-day="31"
+></div>
 ```
 
 The countdown will automatically start when the element scrolls into view (10% visible by default).
@@ -137,6 +134,12 @@ Configure your countdown using data attributes:
 - `data-ce-minute="59"` - Target minute (0-59, default: 0)
 - `data-ce-second="59"` - Target second (0-59, default: 0)
 
+#### Layout Configuration
+
+- `data-ce-units="days,hours,minutes,seconds"` - A comma-separated list of units to display.
+  Available units are `years`, `months`, `days`, `hours`, `minutes`, and `seconds`. Defaults to
+  `days,hours,minutes,seconds`.
+
 #### Behavior Configuration
 
 - `data-ce-count-up="true"` - Count up from target date instead of down
@@ -153,6 +156,7 @@ Configure your countdown using data attributes:
 - `data-ce-minute-label="Minute"` - Singular label for minute
 - `data-ce-seconds-label="Seconds"` - Plural label for seconds
 - `data-ce-second-label="Second"` - Singular label for second
+- `data-ce-accent-color="#E91E63"` - Custom color for themes that support it (Theme 6, 9, 12).
 
 ### Advanced Auto-Initialization
 
@@ -231,35 +235,35 @@ new CountEverest(element, {
 
 Here's a comprehensive list of options you can use to customize CountEverest:
 
-| Option   | Type    | Default | Description                             |
-| -------- | ------- | ------- | --------------------------------------- |
-| day      | Number  | 1       | The target day of the month (1-31)      |
-| month    | Number  | 1       | The target month (1-12)                 |
-| year     | Number  | 2050    | The target year                         |
-| hour     | Number  | 0       | The target hour (0-23)                  |
-| minute   | Number  | 0       | The target minute (0-59)                |
-| second   | Number  | 0       | The target second (0-59)                |
-| timeZone | Number  | null    | The timezone offset (-12 to 14)         |
-| countUp  | Boolean | false   | If true, counts up from the target date |
+| Option         | Type    | Default                        | Description                  |
+| -------------- | ------- | ------------------------------ | ---------------------------- |
+| day            | Number  | 1                              | Target day (1-31)            |
+| month          | Number  | 1                              | Target month (1-12)          |
+| year           | Number  | 2050                           | Target year                  |
+| hour           | Number  | 0                              | Target hour (0-23)           |
+| minute         | Number  | 0                              | Target minute (0-59)         |
+| second         | Number  | 0                              | Target second (0-59)         |
+| accentColor    | String  | `'#284ED8'`                    | Color for themes 6, 9, 12    |
+| units          | Array   | `[days,hours,minutes,seconds]` | Time units to show           |
+| timeZone       | Number  | null                           | Timezone offset (-12 to 14)  |
+| countUp        | Boolean | false                          | Count up instead of down     |
+| singularLabels | Boolean | true                           | Use singular when value is 1 |
+| yearsLabel     | String  | 'Years'                        | Plural label for years       |
+| yearLabel      | String  | 'Year'                         | Singular label for years     |
+| daysLabel      | String  | 'Days'                         | Plural label for days        |
+| dayLabel       | String  | 'Day'                          | Singular label for days      |
+| hoursLabel     | String  | 'Hours'                        | Plural label for hours       |
+| hourLabel      | String  | 'Hour'                         | Singular label for hours     |
+| minutesLabel   | String  | 'Minutes'                      | Plural label for minutes     |
+| minuteLabel    | String  | 'Minute'                       | Singular label for minutes   |
+| secondsLabel   | String  | 'Seconds'                      | Plural label for seconds     |
+| secondLabel    | String  | 'Second'                       | Singular label for seconds   |
 
 ## Callback Functions
 
-CountEverest provides a callback function that you can use to add custom behavior:
-
 - `onInit()`: Called when the countdown is initialized
 - `afterCalculation()`: Called after time calculations are complete
-- `onChange(values)`: Called when countdown values change, receives values object
-
-Example usage:
-
-```javascript
-new CountEverest(element, {
-  // ... other options ...
-  onInit: function () {
-    console.log('Countdown initialized!');
-  },
-});
-```
+- `onChange()`: Called every second after the time has been recalculated.
 
 ## API Methods
 

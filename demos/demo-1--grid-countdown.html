@@ -41,16 +41,7 @@
   </head>
   <body>
     <!-- Nothing to change here -->
-    <div class="ce-countdown ce-countdown--theme-1">
-      <div class="ce-col"><span class="ce-days"></span> <span class="ce-days-label"></span></div>
-      <div class="ce-col"><span class="ce-hours"></span> <span class="ce-hours-label"></span></div>
-      <div class="ce-col">
-        <span class="ce-minutes"></span> <span class="ce-minutes-label"></span>
-      </div>
-      <div class="ce-col">
-        <span class="ce-seconds"></span> <span class="ce-seconds-label"></span>
-      </div>
-    </div>
+    <div class="ce-countdown ce-countdown--theme-1"></div>
 
     <!-- Load all necessary JavaScript files -->
     <script src="../dist/counteverest.min.js"></script>
@@ -64,7 +55,7 @@
             day: 1,
             month: 1,
             year: 2026,
-            pluralLabels: true,
+            units: ['days', 'hours', 'minutes', 'seconds'],
           });
         }
       });

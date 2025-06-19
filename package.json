@@ -61,7 +61,7 @@
     "not op_mini all"
   ],
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
+    "!(dist)/**/*.js": "eslint --cache --fix",
     "*.scss": "stylelint --fix",
     "*.md": "markdownlint --fix",
     "*.{js,scss,md,json,html}": "prettier --write"

@@ -62,24 +62,7 @@
   <body>
     <!-- Nothing to change here -->
     <div class="ce-countdown-wrap--theme-12">
-      <div class="ce-countdown ce-countdown--theme-12 ce-clearfix">
-        <div class="ce-col">
-          <div class="ce-digits ce-days"></div>
-          <span class="ce-days-label"></span>
-        </div>
-        <div class="ce-col">
-          <div class="ce-digits ce-hours"></div>
-          <span class="ce-hours-label"></span>
-        </div>
-        <div class="ce-col">
-          <div class="ce-digits ce-minutes"></div>
-          <span class="ce-minutes-label"></span>
-        </div>
-        <div class="ce-col">
-          <div class="ce-digits ce-seconds"></div>
-          <span class="ce-seconds-label"></span>
-        </div>
-      </div>
+      <div class="ce-countdown ce-countdown--theme-12 ce-clearfix"></div>
       <!-- Video "Messier Marathon 2011" by http://mazwai.com -->
       <video
         autoplay
@@ -104,6 +87,7 @@
             day: 1,
             month: 1,
             year: 2026,
+            units: ['days', 'hours', 'minutes', 'seconds'],
           });
         }
 

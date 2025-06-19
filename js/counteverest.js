@@ -22,22 +22,6 @@ class CountEverest {
       timeZone: null,
       countUp: false,
       currentDateTime: null,
-      yearsWrapper: '.ce-years',
-      monthsWrapper: '.ce-months',
-      daysWrapper: '.ce-days',
-      hoursWrapper: '.ce-hours',
-      minutesWrapper: '.ce-minutes',
-      secondsWrapper: '.ce-seconds',
-      decisecondsWrapper: '.ce-dseconds',
-      millisecondsWrapper: '.ce-mseconds',
-      yearsLabelWrapper: '.ce-years-label',
-      monthsLabelWrapper: '.ce-months-label',
-      daysLabelWrapper: '.ce-days-label',
-      hoursLabelWrapper: '.ce-hours-label',
-      minutesLabelWrapper: '.ce-minutes-label',
-      secondsLabelWrapper: '.ce-seconds-label',
-      decisecondsLabelWrapper: '.ce-dseconds-label',
-      millisecondsLabelWrapper: '.ce-mseconds-label',
       singularLabels: true,
       yearsLabel: 'Years',
       yearLabel: 'Year',
@@ -49,12 +33,20 @@ class CountEverest {
       minuteLabel: 'Minute',
       secondsLabel: 'Seconds',
       secondLabel: 'Second',
+      accentColor: '#284ED8',
+      units: ['days', 'hours', 'minutes', 'seconds'],
       onInit: null,
       afterCalculation: null,
       onChange: null,
     };
     this.#element = element;
     this.#settings = { ...CountEverest.DEFAULT_SETTINGS, ...options };
+
+    // Apply theme-specific options if not already applied
+    if (!options._themeApplied) {
+      CountEverest.applyThemeOptions(element, this.#settings);
+    }
+
     this.#intervalId = null;
     this.init();
   }
@@ -65,6 +57,24 @@ class CountEverest {
   #targetDate;
 
   init() {
+    this.createDOM();
+
+    // For Theme 9, canvases must be created after the DOM is ready.
+    if (this.#element.classList.contains('ce-countdown--theme-9')) {
+      CountEverest.createCanvasesIfNeeded(this.#element);
+    }
+
+    // Apply accent color for Theme 6 now that the DOM is ready.
+    if (this.#element.classList.contains('ce-countdown--theme-6')) {
+      const accentColor = this.#settings.accentColor;
+      const flipBlocks = this.#element.querySelectorAll(
+        '.ce-flip-wrap .ce-flip-front, .ce-flip-wrap .ce-flip-back'
+      );
+      flipBlocks.forEach((block) => {
+        block.style.backgroundColor = accentColor;
+      });
+    }
+
     this.setTargetDate(
       new Date(
         this.#settings.year,
@@ -120,11 +130,13 @@ class CountEverest {
     // Calculate seconds
     values.seconds = Math.floor(timeDiff / SECOND_MS);
 
-    // If the countdown markup does NOT include a years wrapper but *does* include a days wrapper,
-    // show the total days remaining instead of the remaining days after years.
+    const isTheme10 = this.#element.classList.contains('ce-countdown--theme-10');
+
+    // If it's theme 10, or if the countdown markup does NOT include a years wrapper
+    // but *does* include a days wrapper, show the total days remaining.
     if (
-      !this.#element.querySelector(this.#settings.yearsWrapper) &&
-      this.#element.querySelector(this.#settings.daysWrapper)
+      isTheme10 ||
+      (!this.#settings.units.includes('years') && this.#settings.units.includes('days'))
     ) {
       values.days = Math.floor(originalDiff / DAY_MS);
     }
@@ -147,17 +159,36 @@ class CountEverest {
   }
 
   output() {
-    ['years', 'days', 'hours', 'minutes', 'seconds'].forEach((unit) => {
-      const value = this[unit];
-      const wrapper = this.#settings[`${unit}Wrapper`];
-      const labelWrapper = this.#settings[`${unit}LabelWrapper`];
+    this.#settings.units.forEach((unit) => {
+      const value = this[unit] || 0; // Default to 0 if unit not calculated
+      let valueElement;
 
-      const element = this.#element.querySelector(wrapper);
-      if (element) {
-        element.innerHTML = this.wrapDigits(value);
+      // Theme-specific selectors
+      if (this.#element.classList.contains('ce-countdown--theme-6')) {
+        valueElement = this.#element.querySelector(`.ce-${unit} .ce-flip-back`);
+      } else if (this.#element.classList.contains('ce-countdown--theme-10')) {
+        valueElement = this.#element.querySelector(`.${unit}`);
+      } else {
+        valueElement = this.#element.querySelector(`.ce-${unit}`);
       }
 
-      this.writeLabelToDom(labelWrapper, this.getLabel(unit, value));
+      const labelElement = this.#element.querySelector(`.ce-${unit}-label`);
+
+      if (valueElement) {
+        // For theme 10, the whole value is passed to a special handler.
+        // For others, we wrap individual digits.
+        if (this.#element.classList.contains('ce-countdown--theme-10')) {
+          // Do nothing, handled by the theme-specific afterCalculation callback
+        } else if (this.#element.classList.contains('ce-countdown--theme-9')) {
+          // Do nothing here; this is handled by the theme-specific onChange handler.
+        } else {
+          valueElement.innerHTML = this.wrapDigits(value);
+        }
+      }
+
+      if (labelElement) {
+        labelElement.textContent = this.getLabel(unit, value);
+      }
     });
   }
 
@@ -220,9 +251,7 @@ class CountEverest {
 
     // Check if Intersection Observer is supported
     if (!('IntersectionObserver' in window)) {
-      console.warn(
-        'CountEverest auto-init: IntersectionObserver not supported. Falling back to immediate initialization.'
-      );
+      // IntersectionObserver not supported, fallback to immediate initialization
       CountEverest.initAllVisible(settings.selector);
       return;
     }
@@ -269,11 +298,255 @@ class CountEverest {
   static initElement(element) {
     const options = CountEverest.parseDataAttributes(element);
 
+    // Apply theme-specific options
+    CountEverest.applyThemeOptions(element, options);
+    options._themeApplied = true;
+
     // Mark as initialized to prevent double initialization
     element.dataset.ceInitialized = 'true';
 
     // Create new CountEverest instance
     new CountEverest(element, options);
+  }
+
+  /**
+   * Apply theme-specific options and functionality
+   */
+  static applyThemeOptions(element, options) {
+    // Theme 6: Colorful Blocks
+    if (element.classList.contains('ce-countdown--theme-6')) {
+      options.daysWrapper = '.ce-days .ce-flip-back';
+      options.hoursWrapper = '.ce-hours .ce-flip-back';
+      options.minutesWrapper = '.ce-minutes .ce-flip-back';
+      options.secondsWrapper = '.ce-seconds .ce-flip-back';
+      options.wrapDigits = false;
+
+      options.onChange = function () {
+        CountEverest.theme6Animate(element.querySelectorAll('.ce-col>div'));
+      };
+    }
+
+    // Theme 9: Minimal Circles
+    else if (element.classList.contains('ce-countdown--theme-9')) {
+      options.leftHandZeros = false;
+
+      options.onChange = function () {
+        CountEverest.theme9DrawCircles(element, this, options.accentColor || '#284ED8');
+      };
+    }
+
+    // Theme 10: Airport Flip Clock Style
+    else if (element.classList.contains('ce-countdown--theme-10')) {
+      let firstCalculation = true;
+      options.leftHandZeros = true;
+      options.afterCalculation = function () {
+        CountEverest.theme10FlipClock(element, this, firstCalculation);
+        firstCalculation = false;
+      };
+    }
+
+    // Theme 12: Video Background / Animated Gradient
+    else if (element.classList.contains('ce-countdown--theme-12')) {
+      if (options.accentColor) {
+        element.style.color = options.accentColor;
+
+        const originalOnChange = options.onChange;
+        options.onChange = function (...args) {
+          const digits = element.querySelectorAll('.ce-digit');
+          digits.forEach((digit) => {
+            digit.style.borderColor = options.accentColor;
+          });
+
+          if (originalOnChange) {
+            originalOnChange.apply(this, args);
+          }
+        };
+      }
+    }
+  }
+
+  /**
+   * Theme 6: Colorful Blocks animation handler
+   */
+  static theme6Animate(elements) {
+    elements.forEach(function (el) {
+      const flipFront = el.querySelector('.ce-flip-front');
+      const flipBack = el.querySelector('.ce-flip-back');
+      const field = flipBack.textContent;
+      const fieldOld = el.getAttribute('data-old');
+      if (typeof fieldOld === 'undefined') {
+        el.setAttribute('data-old', field);
+      }
+      if (field != fieldOld) {
+        el.classList.add('ce-animate');
+        window.setTimeout(function () {
+          flipFront.textContent = field;
+          el.classList.remove('ce-animate');
+          el.setAttribute('data-old', field);
+        }, 800);
+      }
+    });
+  }
+
+  /**
+   * Theme 9: Minimal Circles canvas drawing
+   */
+  static theme9DrawCircles(element, data, accentColor = '#284ED8') {
+    // Helper function for degree calculation
+    function deg(v) {
+      return (Math.PI / 180) * v - Math.PI / 2;
+    }
+
+    // Helper function to draw individual circle
+    function drawCircle(canvas, value, max, accent) {
+      if (!canvas) return;
+      const secondaryColor = '#282828';
+      const circle = canvas.getContext('2d');
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const radius = Math.min(centerX, centerY) - canvas.width * 0.05; // 5% margin
+      const lineWidth = Math.max(3, canvas.width * 0.02); // 2% of canvas width
+
+      circle.clearRect(0, 0, canvas.width, canvas.height);
+      circle.lineWidth = lineWidth;
+
+      // Draw secondary circle
+      circle.beginPath();
+      circle.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+      circle.strokeStyle = secondaryColor;
+      circle.stroke();
+
+      // Draw primary circle
+      circle.beginPath();
+      circle.strokeStyle = accent;
+      circle.arc(centerX, centerY, radius, deg(0), deg((360 / max) * value));
+      circle.stroke();
+    }
+
+    // Define the units and their maximum values
+    const units = [
+      { unit: 'days', max: 365, value: data.days, pad: false },
+      { unit: 'hours', max: 24, value: data.hours, pad: true },
+      { unit: 'minutes', max: 60, value: data.minutes, pad: true },
+      { unit: 'seconds', max: 60, value: data.seconds, pad: true },
+    ];
+
+    // Update text values
+    units.forEach(({ unit, value, pad }) => {
+      const valueEl = element.querySelector(`.ce-${unit}`);
+      if (valueEl) {
+        valueEl.textContent = pad ? data.strPad(value, 2) : value;
+      }
+    });
+
+    // Find all circle containers
+    const circleElements = element.querySelectorAll('.ce-circle');
+
+    // Iterate over the circle elements and draw the corresponding unit
+    circleElements.forEach((circleEl, index) => {
+      const canvas = circleEl.querySelector('canvas');
+      const unitInfo = units[index];
+
+      if (canvas && unitInfo) {
+        // Check if this circle corresponds to a unit we should draw
+        const hasUnitClass = Array.from(circleEl.querySelectorAll('[class*="ce-"]')).some((el) =>
+          el.classList.contains(`ce-${unitInfo.unit}`)
+        );
+
+        if (hasUnitClass) {
+          drawCircle(canvas, unitInfo.value, unitInfo.max, accentColor);
+        }
+      }
+    });
+  }
+
+  /**
+   * Theme 10: Airport Flip Clock animation handler
+   */
+  static theme10FlipClock(element, data, isFirstCalculation) {
+    const units = {
+      days: data.days,
+      hours: data.hours,
+      minutes: data.minutes,
+      seconds: data.seconds,
+    };
+
+    if (isFirstCalculation) {
+      Object.entries(units).forEach(([unit, value]) => {
+        const unitElement = element.querySelector(`.${unit}`);
+        if (!unitElement) return;
+        const dig = Array.from(
+          { length: value.toString().length },
+          () => `
+            <div class="ce-digits">
+              ${Array.from(
+                { length: 10 },
+                (_, i) => `
+                <div class="ce-digits-inner">
+                  <div class="ce-flip-wrap">
+                    <div class="ce-up">
+                      <div class="ce-shadow"></div>
+                      <div class="ce-inn">${i}</div>
+                    </div>
+                    <div class="ce-down">
+                      <div class="ce-shadow"></div>
+                      <div class="ce-inn">${i}</div>
+                    </div>
+                  </div>
+                </div>
+              `
+              ).join('')}
+            </div>`
+        ).join('');
+        unitElement.innerHTML = dig;
+      });
+    }
+
+    Object.entries(units).forEach(([unit, value]) => {
+      const unitElement = element.querySelector(`.${unit}`);
+      if (!unitElement) return;
+      const digitCount = unitElement.querySelectorAll('.ce-digits').length;
+      const paddedValue = data.strPad(value.toString(), digitCount, '0');
+
+      for (let i = 0; i < paddedValue.length; i++) {
+        const digitsWrap = unitElement.querySelector(`.ce-digits:nth-child(${i + 1})`);
+        if (!digitsWrap) continue;
+        const digit = parseInt(paddedValue[i]);
+        const allDigitsInner = digitsWrap.querySelectorAll('.ce-digits-inner');
+
+        allDigitsInner.forEach((el, index) => {
+          el.classList.remove('active', 'before');
+          if (index === digit) {
+            el.classList.add('active');
+          } else if (index === (digit + 1) % 10) {
+            el.classList.add('before');
+          }
+        });
+
+        if (digitsWrap.querySelector('.before')) {
+          digitsWrap.classList.add('play');
+        } else {
+          digitsWrap.classList.remove('play');
+        }
+      }
+    });
+  }
+
+  /**
+   * Create canvas elements dynamically for Theme 9 if they don't exist
+   */
+  static createCanvasesIfNeeded(element) {
+    const circles = element.querySelectorAll('.ce-circle');
+    circles.forEach((circle) => {
+      // If a canvas doesn't already exist in this circle, create one.
+      if (!circle.querySelector('canvas')) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 408; // Default size, can be styled with CSS
+        canvas.height = 408;
+        // Insert canvas as the first child of the circle container
+        circle.insertBefore(canvas, circle.firstChild);
+      }
+    });
   }
 
   /**
@@ -312,6 +585,7 @@ class CountEverest {
       'minuteLabel',
       'secondsLabel',
       'secondLabel',
+      'accentColor',
     ];
     stringAttrs.forEach((attr) => {
       const value = element.dataset[`ce${attr.charAt(0).toUpperCase() + attr.slice(1)}`];
@@ -329,6 +603,12 @@ class CountEverest {
       }
     });
 
+    // Parse units array
+    const unitsValue = element.dataset.ceUnits;
+    if (unitsValue) {
+      options.units = unitsValue.split(',').map((u) => u.trim());
+    }
+
     return options;
   }
 
@@ -342,11 +622,64 @@ class CountEverest {
       CountEverest.autoInit();
     }
   }
+
+  createDOM() {
+    // If the element is not empty, respect the user's HTML.
+    if (this.#element.innerHTML.trim() !== '') {
+      return;
+    }
+
+    const htmlParts = [];
+    const units = this.#settings.units;
+
+    if (this.#element.classList.contains('ce-countdown--theme-1')) {
+      units.forEach((unit) => {
+        htmlParts.push(
+          `<div class="ce-col"><span class="ce-${unit}"></span> <span class="ce-${unit}-label"></span></div>`
+        );
+      });
+    } else if (this.#element.classList.contains('ce-countdown--theme-6')) {
+      units.forEach((unit) => {
+        htmlParts.push(`<div class="ce-col">
+          <div class="ce-${unit}">
+            <div class="ce-flip-wrap"><div class="ce-flip-front"></div><div class="ce-flip-back"></div></div>
+          </div>
+          <span class="ce-${unit}-label"></span>
+        </div>`);
+      });
+    } else if (this.#element.classList.contains('ce-countdown--theme-9')) {
+      units.forEach((unit) => {
+        htmlParts.push(`<div class="ce-circle">
+          <div class="ce-circle__values">
+            <span class="ce-digit ce-${unit}"></span><span class="ce-label ce-${unit}-label"></span>
+          </div>
+        </div>`);
+      });
+    } else if (this.#element.classList.contains('ce-countdown--theme-10')) {
+      units.forEach((unit) => {
+        htmlParts.push(`<div class="ce-unit-wrap">
+          <div class="${unit}"></div><span class="ce-${unit}-label"></span>
+        </div>`);
+      });
+    } else if (this.#element.classList.contains('ce-countdown--theme-12')) {
+      units.forEach((unit) => {
+        htmlParts.push(`<div class="ce-col">
+          <div class="ce-digits ce-${unit}"></div>
+          <span class="ce-${unit}-label"></span>
+        </div>`);
+      });
+    } else {
+      // Default structure
+      units.forEach((unit) => {
+        htmlParts.push(`<span class="ce-${unit}"></span> <span class="ce-${unit}-label"></span> `);
+      });
+    }
+
+    this.#element.innerHTML = htmlParts.join('').trim();
+  }
 }
 
-// Auto-initialize when DOM is ready if elements with data-ce-auto exist
-if (document.querySelector && document.querySelector('[data-ce-auto]')) {
-  CountEverest.initOnDOMReady();
-}
+// Auto-initialize when DOM is ready
+CountEverest.initOnDOMReady();
 
 window.CountEverest = CountEverest;

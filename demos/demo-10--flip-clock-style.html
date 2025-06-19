@@ -14,130 +14,52 @@
 
     <style type="text/css">
       html {
-        display: table;
         height: 100%;
         width: 100%;
+        overflow: hidden;
       }
 
       body {
-        background: #eee;
-        display: table-cell;
+        display: table;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
           sans-serif;
+        height: 100%;
+        width: 100%;
         margin: 0;
         padding: 0;
-        text-align: center;
+        background: #fff;
+      }
+
+      .ce-countdown-wrap--theme-10 {
+        display: table-cell;
+        margin: 0;
+        padding: 0;
         vertical-align: middle;
       }
 
       .ce-countdown {
         margin: 0 auto;
-        max-width: 800px;
         text-align: center;
       }
     </style>
   </head>
   <body>
-    <div class="ce-countdown ce-countdown--theme-10">
-      <div class="ce-unit-wrap">
-        <div class="days"></div>
-        <span class="ce-days-label"></span>
-      </div>
-      <div class="ce-unit-wrap">
-        <div class="hours"></div>
-        <span class="ce-hours-label"></span>
-      </div>
-      <div class="ce-unit-wrap">
-        <div class="minutes"></div>
-        <span class="ce-minutes-label"></span>
-      </div>
-      <div class="ce-unit-wrap">
-        <div class="seconds"></div>
-        <span class="ce-seconds-label"></span>
-      </div>
+    <div class="ce-countdown-wrap--theme-10">
+      <div
+        class="ce-countdown ce-countdown--theme-10"
+        data-ce-units="days,hours,minutes,seconds"
+      ></div>
     </div>
 
     <script src="../dist/counteverest.min.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const countdownElement = document.querySelector('.ce-countdown');
-        let firstCalculation = true;
-
         if (countdownElement) {
           new CountEverest(countdownElement, {
-            day: 30,
-            month: 6,
-            year: 2026,
-            leftHandZeros: true,
-            afterCalculation: function () {
-              const units = {
-                days: this.days,
-                hours: this.hours,
-                minutes: this.minutes,
-                seconds: this.seconds,
-              };
-
-              if (firstCalculation) {
-                firstCalculation = false;
-                Object.entries(units).forEach(([unit, value]) => {
-                  const unitElement = countdownElement.querySelector(`.${unit}`);
-                  if (!unitElement) return;
-                  let dig = '';
-                  for (let i = 0; i < value.toString().length; i++) {
-                    dig += `
-																			<div class="ce-digits">
-																					${Array.from(
-                                            { length: 10 },
-                                            (_, i) => `
-																							<div class="ce-digits-inner">
-																									<div class="ce-flip-wrap">
-																											<div class="ce-up">
-																													<div class="ce-shadow"></div>
-																													<div class="ce-inn">${i}</div>
-																											</div>
-																											<div class="ce-down">
-																													<div class="ce-shadow"></div>
-																													<div class="ce-inn">${i}</div>
-																											</div>
-																									</div>
-																							</div>
-																					`
-                                          ).join('')}
-																			</div>`;
-                  }
-                  unitElement.innerHTML = dig;
-                });
-              }
-
-              Object.entries(units).forEach(([unit, value]) => {
-                const unitElement = countdownElement.querySelector(`.${unit}`);
-                if (!unitElement) return;
-                const digitCount = unitElement.querySelectorAll('.ce-digits').length;
-                const paddedValue = this.strPad(value.toString(), digitCount, '0');
-
-                for (let i = 0; i < paddedValue.length; i++) {
-                  const digitsWrap = unitElement.querySelector(`.ce-digits:nth-child(${i + 1})`);
-                  if (!digitsWrap) continue;
-                  const digit = parseInt(paddedValue[i]);
-                  const allDigitsInner = digitsWrap.querySelectorAll('.ce-digits-inner');
-
-                  allDigitsInner.forEach((el, index) => {
-                    el.classList.remove('active', 'before');
-                    if (index === digit) {
-                      el.classList.add('active');
-                    } else if (index === (digit + 1) % 10) {
-                      el.classList.add('before');
-                    }
-                  });
-
-                  if (digitsWrap.querySelector('.before')) {
-                    digitsWrap.classList.add('play');
-                  } else {
-                    digitsWrap.classList.remove('play');
-                  }
-                }
-              });
-            },
+            year: 2028,
+            month: 1,
+            day: 1,
           });
         }
       });
