@@ -1,6 +1,6 @@
 # CountEverest
 
-![Version 3.0.0](https://img.shields.io/badge/version-3.0.0-blue.svg)
+![Version 3.1.0](https://img.shields.io/badge/version-3.1.0-blue.svg)
 ![License: GPL v2](https://img.shields.io/badge/license-GPL%20v2-green.svg)
 ![Vanilla JS](https://img.shields.io/badge/vanilla-js-yellow.svg)
 ![Size: 10 KB](https://img.shields.io/badge/size-1%20KB-brightgreen.svg)
@@ -8,9 +8,9 @@
 ![counteverest-plain](https://github.com/user-attachments/assets/eb4ee579-eac9-4ecf-96f2-f98bf116606e)
 
 CountEverest is a lightweight, customizable countdown script that's easy to integrate into your
-projects. It offers a range of features including callback functions, left-hand zeros, and easy
-localization. Perfect for developers who want a flexible countdown solution without the need for
-extensive JavaScript knowledge.
+projects. It offers a range of features including callback functions, left-hand zeros, easy
+localization, and automatic initialization when scrolling into view. Perfect for developers who
+want a flexible countdown solution without the need for extensive JavaScript knowledge.
 
 ## Check out our [demo page](https://dxpr.github.io/CountEverest/)
 
@@ -19,6 +19,7 @@ extensive JavaScript knowledge.
 - [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Auto-Initialization (New in 3.1.0)](#auto-initialization-new-in-310)
 - [Customization](#customization)
 - [Options](#options)
 - [Callback Functions](#callback-functions)
@@ -102,6 +103,89 @@ After including the necessary files, you can create a countdown by following the
    });
    ```
 
+## Auto-Initialization (New in 3.1.0)
+
+CountEverest now supports automatic initialization of countdown timers when they scroll into view,
+eliminating the need for custom JavaScript in many cases. This feature uses the Intersection
+Observer API for optimal performance.
+
+### Basic Auto-Initialization
+
+Simply add the `data-ce-auto` attribute to your countdown element along with the target date:
+
+```html
+<div class="ce-countdown" data-ce-auto data-ce-year="2025" data-ce-month="12" data-ce-day="31">
+  <span class="ce-days"></span> <span class="ce-days-label"></span> <span class="ce-hours"></span>
+  <span class="ce-hours-label"></span> <span class="ce-minutes"></span>
+  <span class="ce-minutes-label"></span> <span class="ce-seconds"></span>
+  <span class="ce-seconds-label"></span>
+</div>
+```
+
+The countdown will automatically start when the element scrolls into view (10% visible by default).
+
+### Available Data Attributes
+
+Configure your countdown using data attributes:
+
+#### Date/Time Configuration
+
+- `data-ce-year="2025"` - Target year
+- `data-ce-month="12"` - Target month (1-12)
+- `data-ce-day="31"` - Target day (1-31)
+- `data-ce-hour="23"` - Target hour (0-23, default: 0)
+- `data-ce-minute="59"` - Target minute (0-59, default: 0)
+- `data-ce-second="59"` - Target second (0-59, default: 0)
+
+#### Behavior Configuration
+
+- `data-ce-count-up="true"` - Count up from target date instead of down
+- `data-ce-singular-labels="false"` - Disable singular labels (e.g., "1 Day" vs "1 Days")
+- `data-ce-time-zone="-5"` - Timezone offset (-12 to 14)
+
+#### Label Customization
+
+- `data-ce-days-label="Days"` - Plural label for days
+- `data-ce-day-label="Day"` - Singular label for day
+- `data-ce-hours-label="Hours"` - Plural label for hours
+- `data-ce-hour-label="Hour"` - Singular label for hour
+- `data-ce-minutes-label="Minutes"` - Plural label for minutes
+- `data-ce-minute-label="Minute"` - Singular label for minute
+- `data-ce-seconds-label="Seconds"` - Plural label for seconds
+- `data-ce-second-label="Second"` - Singular label for second
+
+### Advanced Auto-Initialization
+
+You can manually control auto-initialization with custom options:
+
+```javascript
+// Initialize all elements with custom selector and options
+CountEverest.autoInit({
+  selector: '.my-countdown', // Custom selector
+  rootMargin: '50px', // Start initialization 50px before element is visible
+  threshold: 0.5, // Element must be 50% visible before initializing
+});
+```
+
+### Manual Control
+
+Auto-initialization happens automatically when the DOM loads if elements with `data-ce-auto` are
+found. You can disable this by removing the attribute and calling methods manually:
+
+```javascript
+// Initialize a specific element from data attributes
+CountEverest.initElement(document.querySelector('.my-countdown'));
+
+// Initialize all elements immediately (no scroll detection)
+CountEverest.initAllVisible('[data-ce-auto]');
+```
+
+### Browser Compatibility
+
+Auto-initialization uses the Intersection Observer API, which is supported in all modern browsers.
+For older browsers (IE11 and below), CountEverest automatically falls back to immediate
+initialization.
+
 ## Customization
 
 CountEverest offers extensive customization options. Here are some examples:
@@ -160,25 +244,19 @@ Here's a comprehensive list of options you can use to customize CountEverest:
 
 ## Callback Functions
 
-CountEverest provides several callback functions that you can use to add custom behavior:
+CountEverest provides a callback function that you can use to add custom behavior:
 
 - `onInit()`: Called when the countdown is initialized
-- `beforeCalculation()`: Called before each calculation cycle
-- `afterCalculation()`: Called after each calculation cycle
-- `onChange(values)`: Called when the countdown values change. Receives an object with the current
-  values.
-- `onComplete()`: Called when the countdown reaches zero
+- `afterCalculation()`: Called after time calculations are complete
+- `onChange(values)`: Called when countdown values change, receives values object
 
 Example usage:
 
 ```javascript
 new CountEverest(element, {
   // ... other options ...
-  onChange: function (values) {
-    console.log('Countdown updated:', values);
-  },
-  onComplete: function () {
-    console.log('Countdown finished!');
+  onInit: function () {
+    console.log('Countdown initialized!');
   },
 });
 ```
@@ -219,15 +297,15 @@ new CountEverest(document.querySelector('.countdown'), {
 });
 ```
 
-### Countdown with Callback
+### Countdown with Custom Initialization
 
 ```javascript
 new CountEverest(document.querySelector('.countdown'), {
   day: 25,
   month: 12,
   year: 2023,
-  onComplete: function () {
-    alert('Merry Christmas!');
+  onInit: function () {
+    console.log('Holiday countdown started!');
   },
 });
 ```
