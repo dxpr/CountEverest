@@ -14,6 +14,7 @@
 }
 
 .ce-countdown--theme-1 .ce-years,
+.ce-countdown--theme-1 .ce-months,
 .ce-countdown--theme-1 .ce-days,
 .ce-countdown--theme-1 .ce-hours,
 .ce-countdown--theme-1 .ce-minutes,
@@ -30,6 +31,7 @@
 }
 
 .ce-countdown--theme-1 .ce-years-label,
+.ce-countdown--theme-1 .ce-months-label,
 .ce-countdown--theme-1 .ce-days-label,
 .ce-countdown--theme-1 .ce-hours-label,
 .ce-countdown--theme-1 .ce-minutes-label,
@@ -42,6 +44,7 @@
 
 @media all and (width <= 540px) {
   .ce-countdown--theme-1 .ce-years,
+  .ce-countdown--theme-1 .ce-months,
   .ce-countdown--theme-1 .ce-days,
   .ce-countdown--theme-1 .ce-hours,
   .ce-countdown--theme-1 .ce-minutes,
@@ -71,6 +74,7 @@
 }
 
 .ce-countdown--theme-6 .ce-years,
+.ce-countdown--theme-6 .ce-months,
 .ce-countdown--theme-6 .ce-days,
 .ce-countdown--theme-6 .ce-hours,
 .ce-countdown--theme-6 .ce-minutes,
@@ -86,6 +90,7 @@
 }
 
 html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-years,
+html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-months,
 html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-days,
 html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-hours,
 html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-minutes,
@@ -127,6 +132,7 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
 }
 
 .ce-countdown--theme-6 .ce-years-label,
+.ce-countdown--theme-6 .ce-months-label,
 .ce-countdown--theme-6 .ce-days-label,
 .ce-countdown--theme-6 .ce-hours-label,
 .ce-countdown--theme-6 .ce-minutes-label,
@@ -145,6 +151,7 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
   }
 
   .ce-countdown--theme-6 .ce-years,
+  .ce-countdown--theme-6 .ce-months,
   .ce-countdown--theme-6 .ce-days,
   .ce-countdown--theme-6 .ce-hours,
   .ce-countdown--theme-6 .ce-minutes,
@@ -162,6 +169,7 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
   }
 
   .ce-countdown--theme-6 .ce-years-label,
+  .ce-countdown--theme-6 .ce-months-label,
   .ce-countdown--theme-6 .ce-days-label,
   .ce-countdown--theme-6 .ce-hours-label,
   .ce-countdown--theme-6 .ce-minutes-label,

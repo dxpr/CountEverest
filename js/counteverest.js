@@ -20,6 +20,7 @@ class CountEverest {
       second: 0,
       countUp: false,
       singularLabels: true,
+      leftHandZeros: true,
       yearsLabel: 'Years',
       yearLabel: 'Year',
       monthsLabel: 'Months',
@@ -253,9 +254,9 @@ class CountEverest {
   }
 
   wrapDigits(value) {
-    return value
-      .toString()
-      .padStart(2, '0')
+    const valueStr = value.toString();
+    const paddedValue = this.#settings.leftHandZeros ? valueStr.padStart(2, '0') : valueStr;
+    return paddedValue
       .split('')
       .map((digit) => `<span class="ce-digit">${digit}</span>`)
       .join('');
@@ -407,10 +408,8 @@ class CountEverest {
 
     // Theme 10: Airport Flip Clock Style
     else if (element.classList.contains('ce-countdown--theme-10')) {
-      // Set appropriate units if not explicitly set - Theme 10 always uses total days
-      if (!options.units || options.units.length === 6) {
-        options.units = ['days', 'hours', 'minutes', 'seconds'];
-      }
+      // Theme 10 can handle any units, don't override unless explicitly limited in demo
+      // No unit restrictions - let it use the default or user-specified units
 
       let firstCalculation = true;
       options.leftHandZeros = true;
@@ -529,9 +528,11 @@ class CountEverest {
       const canvas = circleEl.querySelector('canvas');
 
       // Find which unit this circle represents by checking for unit classes
-      const unitForThisCircle = settings.units.find((unit) => Array.from(circleEl.querySelectorAll('[class*="ce-"]')).some((el) =>
+      const unitForThisCircle = settings.units.find((unit) =>
+        Array.from(circleEl.querySelectorAll('[class*="ce-"]')).some((el) =>
           el.classList.contains(`ce-${unit}`)
-        ));
+        )
+      );
 
       if (canvas && unitForThisCircle && unitConfigs[unitForThisCircle]) {
         const config = unitConfigs[unitForThisCircle];
@@ -557,8 +558,19 @@ class CountEverest {
       Object.entries(units).forEach(([unit, value]) => {
         const unitElement = element.querySelector(`.${unit}`);
         if (!unitElement) return;
+
+        // Determine digit count based on leftHandZeros setting
+        let digitCount;
+        if (settings.leftHandZeros) {
+          // For leftHandZeros, ensure at least 2 digits for most units
+          digitCount = Math.max(2, value.toString().length);
+        } else {
+          // Without leftHandZeros, use actual value length
+          digitCount = Math.max(1, value.toString().length);
+        }
+
         const dig = Array.from(
-          { length: value.toString().length },
+          { length: digitCount },
           () => `
             <div class="ce-digits">
               ${Array.from(
@@ -588,7 +600,14 @@ class CountEverest {
       const unitElement = element.querySelector(`.${unit}`);
       if (!unitElement) return;
       const digitCount = unitElement.querySelectorAll('.ce-digits').length;
-      const paddedValue = data.strPad(value.toString(), digitCount, '0');
+
+      // Apply padding based on leftHandZeros setting
+      let paddedValue;
+      if (settings.leftHandZeros) {
+        paddedValue = data.strPad(value.toString(), digitCount, '0');
+      } else {
+        paddedValue = value.toString().padStart(digitCount, '0');
+      }
 
       for (let i = 0; i < paddedValue.length; i++) {
         const digitsWrap = unitElement.querySelector(`.ce-digits:nth-child(${i + 1})`);
@@ -645,7 +664,7 @@ class CountEverest {
     }
 
     // Parse boolean attributes
-    const boolAttrs = ['countUp', 'singularLabels'];
+    const boolAttrs = ['countUp', 'singularLabels', 'leftHandZeros'];
     boolAttrs.forEach((attr) => {
       const value = element.dataset[`ce${attr.charAt(0).toUpperCase() + attr.slice(1)}`];
       if (value !== undefined) {

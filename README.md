@@ -27,20 +27,20 @@ countdown without writing any JavaScript.
 
 ## Quick Start
 
-1.  Clone the repository or download the latest release:
+1. Clone the repository or download the latest release:
 
     ```bash
     git clone git@github.com:dxpr/CountEverest.git
     ```
 
-2.  Include the CSS and JS files in your HTML:
+2. Include the CSS and JS files in your HTML:
 
     ```html
     <link rel="stylesheet" href="../dist/counteverest.min.css" />
     <script src="../dist/counteverest.min.js"></script>
     ```
 
-3.  Add the countdown HTML:
+3. Add the countdown HTML:
 
     ```html
     <div class="ce-countdown" data-ce-datetime="2027-12-31"></div>
@@ -60,14 +60,14 @@ To use a specific theme, just add the theme class:
 While auto-initialization is recommended, you can still initialize the plugin manually if you need
 more control.
 
-1.  Include the CSS and JS files in your HTML (see Quick Start).
-2.  Add an empty `div` where you want the countdown to appear.
+1. Include the CSS and JS files in your HTML (see Quick Start).
+2. Add an empty `div` where you want the countdown to appear.
 
     ```html
     <div class="my-countdown"></div>
     ```
 
-3.  Initialize CountEverest with your desired options:
+3. Initialize CountEverest with your desired options:
 
     ```javascript
     document.addEventListener('DOMContentLoaded', () => {
@@ -124,6 +124,7 @@ Configure your countdown using data attributes:
 
 - `data-ce-count-up="true"` - Count up from target date instead of down
 - `data-ce-singular-labels="false"` - Disable singular labels (e.g., "1 Day" vs "1 Days")
+- `data-ce-left-hand-zeros="false"` - Disable leading zeros (e.g., "1" vs "01")
 
 #### Label Customization
 
@@ -328,6 +329,7 @@ Here's a comprehensive list of options you can use to customize CountEverest:
 | units          | Array   | `[days,hours,minutes,seconds]` | Time units to show           |
 | countUp        | Boolean | false                          | Count up instead of down     |
 | singularLabels | Boolean | true                           | Use singular when value is 1 |
+| leftHandZeros  | Boolean | true                           | Add leading zeros to numbers |
 | yearsLabel     | String  | 'Years'                        | Plural label for years       |
 | yearLabel      | String  | 'Year'                         | Singular label for years     |
 | daysLabel      | String  | 'Days'                         | Plural label for days        |
