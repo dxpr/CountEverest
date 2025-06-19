@@ -46,6 +46,9 @@ class CountEverest {
       CountEverest.applyThemeOptions(element, this.#settings);
     }
 
+    // Store settings on element for theme functions to access
+    element._ceSettings = this.#settings;
+
     this.#intervalId = null;
     this.init();
   }
@@ -164,15 +167,26 @@ class CountEverest {
   }
 
   output() {
-    // Filter units to only show those with non-zero values
-    const visibleUnits = this.#settings.units.filter((unit) => {
-      const value = this[unit] || 0;
-      return value > 0;
-    });
+    // For themes that handle their own visibility (like theme 9 and 10), don't filter units
+    const isSpecialTheme =
+      this.#element.classList.contains('ce-countdown--theme-9') ||
+      this.#element.classList.contains('ce-countdown--theme-10');
 
-    // If no units are visible (all zeros), show at least the last unit
-    if (visibleUnits.length === 0 && this.#settings.units.length > 0) {
-      visibleUnits.push(this.#settings.units[this.#settings.units.length - 1]);
+    let visibleUnits;
+    if (isSpecialTheme) {
+      // For special themes, show all configured units
+      visibleUnits = this.#settings.units;
+    } else {
+      // For other themes, filter units to only show those with non-zero values
+      visibleUnits = this.#settings.units.filter((unit) => {
+        const value = this[unit] || 0;
+        return value > 0;
+      });
+
+      // If no units are visible (all zeros), show at least the last unit
+      if (visibleUnits.length === 0 && this.#settings.units.length > 0) {
+        visibleUnits.push(this.#settings.units[this.#settings.units.length - 1]);
+      }
     }
 
     visibleUnits.forEach((unit) => {
@@ -207,32 +221,35 @@ class CountEverest {
       }
     });
 
-    // Hide units that are not visible
-    this.#settings.units.forEach((unit) => {
-      if (!visibleUnits.includes(unit)) {
-        const unitElement = this.#element.querySelector(`.ce-${unit}`);
-        const labelElement = this.#element.querySelector(`.ce-${unit}-label`);
-        const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
+    // Only hide units for non-special themes
+    if (!isSpecialTheme) {
+      // Hide units that are not visible
+      this.#settings.units.forEach((unit) => {
+        if (!visibleUnits.includes(unit)) {
+          const unitElement = this.#element.querySelector(`.ce-${unit}`);
+          const labelElement = this.#element.querySelector(`.ce-${unit}-label`);
+          const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
 
-        if (unitElement && unitElement.parentElement) {
-          unitElement.parentElement.style.display = 'none';
-        }
-        if (colElement) {
-          colElement.style.display = 'none';
-        }
-      } else {
-        // Show units that are visible
-        const unitElement = this.#element.querySelector(`.ce-${unit}`);
-        const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
+          if (unitElement && unitElement.parentElement) {
+            unitElement.parentElement.style.display = 'none';
+          }
+          if (colElement) {
+            colElement.style.display = 'none';
+          }
+        } else {
+          // Show units that are visible
+          const unitElement = this.#element.querySelector(`.ce-${unit}`);
+          const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
 
-        if (unitElement && unitElement.parentElement) {
-          unitElement.parentElement.style.display = '';
+          if (unitElement && unitElement.parentElement) {
+            unitElement.parentElement.style.display = '';
+          }
+          if (colElement) {
+            colElement.style.display = '';
+          }
         }
-        if (colElement) {
-          colElement.style.display = '';
-        }
-      }
-    });
+      });
+    }
   }
 
   wrapDigits(value) {
@@ -358,6 +375,11 @@ class CountEverest {
   static applyThemeOptions(element, options) {
     // Theme 6: Colorful Blocks
     if (element.classList.contains('ce-countdown--theme-6')) {
+      // Set appropriate units if not explicitly set
+      if (!options.units || options.units.length === 6) {
+        options.units = ['days', 'hours', 'minutes', 'seconds'];
+      }
+
       options.daysWrapper = '.ce-days .ce-flip-back';
       options.hoursWrapper = '.ce-hours .ce-flip-back';
       options.minutesWrapper = '.ce-minutes .ce-flip-back';
@@ -371,6 +393,11 @@ class CountEverest {
 
     // Theme 9: Minimal Circles
     else if (element.classList.contains('ce-countdown--theme-9')) {
+      // Set appropriate units if not explicitly set
+      if (!options.units || options.units.length === 6) {
+        options.units = ['days', 'hours', 'minutes', 'seconds'];
+      }
+
       options.leftHandZeros = false;
 
       options.onChange = function () {
@@ -380,6 +407,11 @@ class CountEverest {
 
     // Theme 10: Airport Flip Clock Style
     else if (element.classList.contains('ce-countdown--theme-10')) {
+      // Set appropriate units if not explicitly set - Theme 10 always uses total days
+      if (!options.units || options.units.length === 6) {
+        options.units = ['days', 'hours', 'minutes', 'seconds'];
+      }
+
       let firstCalculation = true;
       options.leftHandZeros = true;
       options.afterCalculation = function () {
@@ -466,39 +498,44 @@ class CountEverest {
       circle.stroke();
     }
 
-    // Define the units and their maximum values
-    const units = [
-      { unit: 'days', max: 365, value: data.days, pad: false },
-      { unit: 'hours', max: 24, value: data.hours, pad: true },
-      { unit: 'minutes', max: 60, value: data.minutes, pad: true },
-      { unit: 'seconds', max: 60, value: data.seconds, pad: true },
-    ];
+    // Get the settings from the element to know which units are configured
+    const settings = element._ceSettings || { units: ['days', 'hours', 'minutes', 'seconds'] };
 
-    // Update text values
-    units.forEach(({ unit, value, pad }) => {
-      const valueEl = element.querySelector(`.ce-${unit}`);
-      if (valueEl) {
-        valueEl.textContent = pad ? data.strPad(value, 2) : value;
+    // Define unit configurations with their maximum values
+    const unitConfigs = {
+      years: { max: 100, value: data.years || 0, pad: false },
+      months: { max: 12, value: data.months || 0, pad: false },
+      days: { max: 365, value: data.days || 0, pad: false },
+      hours: { max: 24, value: data.hours || 0, pad: true },
+      minutes: { max: 60, value: data.minutes || 0, pad: true },
+      seconds: { max: 60, value: data.seconds || 0, pad: true },
+    };
+
+    // Update text values for all units that exist in the DOM
+    settings.units.forEach((unit) => {
+      const config = unitConfigs[unit];
+      if (config) {
+        const valueEl = element.querySelector(`.ce-${unit}`);
+        if (valueEl) {
+          valueEl.textContent = config.pad ? data.strPad(config.value, 2) : config.value;
+        }
       }
     });
 
-    // Find all circle containers
+    // Find all circle containers and match them to units
     const circleElements = element.querySelectorAll('.ce-circle');
 
-    // Iterate over the circle elements and draw the corresponding unit
     circleElements.forEach((circleEl, index) => {
       const canvas = circleEl.querySelector('canvas');
-      const unitInfo = units[index];
 
-      if (canvas && unitInfo) {
-        // Check if this circle corresponds to a unit we should draw
-        const hasUnitClass = Array.from(circleEl.querySelectorAll('[class*="ce-"]')).some((el) =>
-          el.classList.contains(`ce-${unitInfo.unit}`)
-        );
+      // Find which unit this circle represents by checking for unit classes
+      const unitForThisCircle = settings.units.find((unit) => Array.from(circleEl.querySelectorAll('[class*="ce-"]')).some((el) =>
+          el.classList.contains(`ce-${unit}`)
+        ));
 
-        if (hasUnitClass) {
-          drawCircle(canvas, unitInfo.value, unitInfo.max, accentColor);
-        }
+      if (canvas && unitForThisCircle && unitConfigs[unitForThisCircle]) {
+        const config = unitConfigs[unitForThisCircle];
+        drawCircle(canvas, config.value, config.max, accentColor);
       }
     });
   }
@@ -507,12 +544,14 @@ class CountEverest {
    * Theme 10: Airport Flip Clock animation handler
    */
   static theme10FlipClock(element, data, isFirstCalculation) {
-    const units = {
-      days: data.days,
-      hours: data.hours,
-      minutes: data.minutes,
-      seconds: data.seconds,
-    };
+    // Get the settings from the element to know which units are configured
+    const settings = element._ceSettings || { units: ['days', 'hours', 'minutes', 'seconds'] };
+
+    // Build units object based on what's actually configured
+    const units = {};
+    settings.units.forEach((unit) => {
+      units[unit] = data[unit] || 0;
+    });
 
     if (isFirstCalculation) {
       Object.entries(units).forEach(([unit, value]) => {
