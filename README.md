@@ -469,47 +469,99 @@ new CountEverest(element, {
 
 ## Migrate from jQuery CountEverest
 
-If you're migrating from the jQuery version to the new vanilla JavaScript version, here are the key
-changes you need to make:
+Migrating from the old jQuery version to the new vanilla JS version is straightforward. You have
+two main options: switching to the new zero-JavaScript auto-initialization, or updating your
+existing JavaScript code.
 
-1. Update your script inclusion:
+### Option 1: Migrate to Auto-Initialization (Recommended)
 
-   ```html
-   <!-- Old -->
-   <script src="js/jquery.counteverest.js"></script>
+This is the easiest way to upgrade. It removes the need for custom JavaScript initialization code
+entirely.
 
-   <!-- New -->
-   <script src="../dist/counteverest.min.js"></script>
-   ```
+1.  **Update your script inclusion:**
+    Make sure you're loading the new `counteverest.min.js` file and remove the jQuery dependency if
+    you no longer need it.
 
-2. Update your initialization code:
+    ```html
+    <!-- Old -->
+    <script src="https://code.jquery.com/jquery-3.x.x.min.js"></script>
+    <script src="js/jquery.counteverest.js"></script>
 
-   ```javascript
-   // Old
-   $('.countdown').countEverest({
-     day: 1,
-     month: 1,
-     year: 2026,
-   });
+    <!-- New -->
+    <script src="../dist/counteverest.min.js"></script>
+    ```
 
-   // New
-   const countdown = new CountEverest(document.querySelector('.countdown'), {
-     day: 1,
-     month: 1,
-     year: 2026,
-   });
-   ```
+2.  **Convert your jQuery options to data attributes:**
+    Instead of initializing the plugin with JavaScript, add `data-ce-auto` to your countdown element
+    and move your options into `data-ce-*` attributes.
 
-3. Update any custom code that interacts with the countdown:
+    **Old jQuery Code:**
 
-   ```javascript
-   // Old
-   var countdown = $('.countdown').data('countEverest');
-   countdown.setTargetDate(new Date(2024, 0, 1));
+    ```javascript
+    $('.countdown').countEverest({
+      year: 2026,
+      month: 1,
+      day: 1,
+      // ... other options
+    });
+    ```
 
-   // New
-   countdown.setTargetDate(new Date(2024, 0, 1));
-   ```
+    **New HTML with Data Attributes:**
+
+    ```html
+    <div
+      class="ce-countdown"
+      data-ce-auto
+      data-ce-year="2026"
+      data-ce-month="1"
+      data-ce-day="1"
+    ></div>
+    ```
+
+    You can now delete your old JavaScript initialization block. See the
+    [Available Data Attributes](#available-data-attributes) section for a full list of attributes.
+
+### Option 2: Migrate to Manual JavaScript Initialization
+
+If you need to control the countdown programmatically (e.g., using API methods), you can update
+your existing JavaScript.
+
+1.  **Update your script inclusion:** (Same as above)
+
+2.  **Update your initialization code:**
+    Replace the jQuery `countEverest()` call with the new `CountEverest` class constructor.
+
+    **Old jQuery Code:**
+
+    ```javascript
+    // Initialize
+    $('.countdown').countEverest({
+      day: 1,
+      month: 1,
+      year: 2026,
+    });
+
+    // Access API
+    var countdown = $('.countdown').data('countEverest');
+    countdown.setTargetDate(new Date(2024, 0, 1));
+    ```
+
+    **New Vanilla JS Code:**
+
+    ```javascript
+    // Initialize
+    const countdownElement = document.querySelector('.countdown');
+    const countdown = new CountEverest(countdownElement, {
+      day: 1,
+      month: 1,
+      year: 2026,
+    });
+
+    // Access API
+    countdown.setTargetDate(new Date(2024, 0, 1));
+    ```
+
+    The option names and API methods remain largely the same, making the transition smooth.
 
 ## License
 
