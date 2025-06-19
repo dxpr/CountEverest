@@ -85,30 +85,31 @@
   </head>
   <body>
     <div class="demo-section">
-      <div
-        class="ce-countdown"
-        data-ce-auto
-        data-ce-year="2027"
-        data-ce-month="12"
-        data-ce-day="31"
-        data-ce-hour="14"
-        data-ce-minute="30"
-        data-ce-units="years,months,days,hours,minutes,seconds"
-      ></div>
+      <div class="ce-countdown" data-ce-datetime="2027-12-31 14:30"></div>
       <h3>Basic Auto-Init Countdown</h3>
-      <p>This countdown will start automatically when you scroll to this section.</p>
+      <p>This countdown uses the new single data-ce-datetime attribute for cleaner HTML.</p>
       <pre class="code-example">
-&lt;div class="ce-countdown" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31" data-ce-units="years,months,days,hours,minutes,seconds"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown" data-ce-datetime="2027-12-31 14:30"&gt;&lt;/div&gt;</pre
       >
     </div>
 
     <div class="demo-section">
       <div
         class="ce-countdown"
-        data-ce-auto
-        data-ce-year="2027"
-        data-ce-month="12"
-        data-ce-day="31"
+        data-ce-datetime="2027-12-31 14:30"
+        data-ce-units="months,days,hours,minutes,seconds"
+      ></div>
+      <h3>Controlling what units are displayed</h3>
+      <p>This countdown will start automatically when you scroll to this section.</p>
+      <pre class="code-example">
+&lt;div class="ce-countdown" data-ce-datetime="2027-12-31 14:30" data-ce-units="months,days,hours,minutes,seconds"&gt;&lt;/div&gt;</pre
+      >
+    </div>
+
+    <div class="demo-section">
+      <h2
+        class="ce-countdown"
+        data-ce-datetime="2027-12-31"
         data-ce-units="years,days,hours,minutes,seconds"
         data-ce-years-label="Années"
         data-ce-year-label="Année"
@@ -120,27 +121,24 @@
         data-ce-minute-label="Minute"
         data-ce-seconds-label="Secondes"
         data-ce-second-label="Seconde"
-      ></div>
+      ></h2>
       <h3>Custom Labels Auto-Init</h3>
       <p>This countdown uses custom labels via data attributes.</p>
       <pre class="code-example">
-&lt;div class="ce-countdown" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31"
+&lt;h2 class="ce-countdown" data-ce-datetime="2027-12-31"
    data-ce-units="years,days,hours,minutes,seconds"
    data-ce-years-label="Années" data-ce-year-label="Année"
    data-ce-days-label="Jours" data-ce-day-label="Jour"
    data-ce-hours-label="Heures" data-ce-hour-label="Heure"
    data-ce-minutes-label="Minutes" data-ce-minute-label="Minute"
-   data-ce-seconds-label="Secondes" data-ce-second-label="Seconde"&gt;&lt;/div&gt;</pre
+   data-ce-seconds-label="Secondes" data-ce-second-label="Seconde"&gt;&lt;/h2&gt;</pre
       >
     </div>
 
     <div class="demo-section">
       <div
         class="ce-countdown"
-        data-ce-auto
-        data-ce-year="2020"
-        data-ce-month="1"
-        data-ce-day="1"
+        data-ce-datetime="2020-01-01"
         data-ce-count-up="true"
         data-ce-days-label="Days Since Launch"
         data-ce-day-label="Day Since Launch"
@@ -148,7 +146,7 @@
       <h3>Count-Up Auto-Init</h3>
       <p>This countdown counts UP from a past date automatically.</p>
       <pre class="code-example">
-&lt;div class="ce-countdown" data-ce-auto data-ce-year="2020" data-ce-month="1" data-ce-day="1"
+&lt;div class="ce-countdown" data-ce-datetime="2020-01-01"
    data-ce-count-up="true" data-ce-days-label="Days Since Launch"
    data-ce-day-label="Day Since Launch"&gt;&lt;/div&gt;</pre
       >
@@ -159,107 +157,77 @@
       <p>See how auto-initialization works with different CountEverest themes!</p>
 
       <div class="theme-demo">
-        <div
-          class="ce-countdown ce-countdown--theme-1"
-          data-ce-auto
-          data-ce-year="2027"
-          data-ce-month="12"
-          data-ce-day="31"
-        ></div>
+        <div class="ce-countdown ce-countdown--theme-1" data-ce-datetime="2027-12-31"></div>
         <h4>Theme 1: Grid Countdown</h4>
         <pre class="code-example">
-&lt;div class="ce-countdown ce-countdown--theme-1" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown ce-countdown--theme-1" data-ce-datetime="2027-12-31"&gt;&lt;/div&gt;</pre
         >
       </div>
 
       <div class="theme-demo">
-        <div
-          class="ce-countdown ce-countdown--theme-6"
-          data-ce-auto
-          data-ce-year="2027"
-          data-ce-month="12"
-          data-ce-day="31"
-        ></div>
+        <div class="ce-countdown ce-countdown--theme-6" data-ce-datetime="2027-12-31"></div>
         <h4>Theme 6: Colorful Blocks</h4>
         <pre class="code-example">
-&lt;div class="ce-countdown ce-countdown--theme-6" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown ce-countdown--theme-6" data-ce-datetime="2027-12-31"&gt;&lt;/div&gt;</pre
         >
       </div>
 
       <div class="theme-demo">
         <div
           class="ce-countdown ce-countdown--theme-6"
-          data-ce-auto
-          data-ce-year="2027"
-          data-ce-month="12"
-          data-ce-day="31"
+          data-ce-datetime="2027-12-31"
           data-ce-accent-color="#E91E63"
         ></div>
         <h4>Theme 6 with Custom Accent Color</h4>
         <pre class="code-example">
-&lt;div class="ce-countdown ce-countdown--theme-6" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31" data-ce-accent-color="#E91E63"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown ce-countdown--theme-6" data-ce-datetime="2027-12-31" data-ce-accent-color="#E91E63"&gt;&lt;/div&gt;</pre
         >
       </div>
 
       <div class="theme-demo">
         <div
           class="ce-countdown ce-countdown--theme-9"
-          data-ce-auto
-          data-ce-year="2027"
-          data-ce-month="12"
-          data-ce-day="31"
+          data-ce-datetime="2027-12-31"
           style="max-width: 800px; margin: 0 auto"
         ></div>
         <h4>Theme 9: Minimal Circles (Canvas created dynamically)</h4>
         <pre class="code-example">
-&lt;div class="ce-countdown ce-countdown--theme-9" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown ce-countdown--theme-9" data-ce-datetime="2027-12-31"&gt;&lt;/div&gt;</pre
         >
       </div>
 
       <div class="theme-demo">
         <div
           class="ce-countdown ce-countdown--theme-9"
-          data-ce-auto
-          data-ce-year="2027"
-          data-ce-month="12"
-          data-ce-day="31"
+          data-ce-datetime="2027-12-31"
           data-ce-accent-color="#4CAF50"
           style="max-width: 800px; margin: 0 auto"
         ></div>
         <h4>Theme 9 with Custom Accent Color</h4>
         <pre class="code-example">
-&lt;div class="ce-countdown ce-countdown--theme-9" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31" data-ce-accent-color="#4CAF50"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown ce-countdown--theme-9" data-ce-datetime="2027-12-31" data-ce-accent-color="#4CAF50"&gt;&lt;/div&gt;</pre
         >
       </div>
 
       <div class="theme-demo">
         <div
           class="ce-countdown ce-countdown--theme-10"
-          data-ce-auto
-          data-ce-year="2027"
-          data-ce-month="12"
-          data-ce-day="31"
+          data-ce-datetime="2027-12-31"
           style="max-width: 800px; margin: 0 auto"
         ></div>
         <h4>Theme 10: Airport Flip Clock Style</h4>
         <pre class="code-example">
-&lt;div class="ce-countdown ce-countdown--theme-10" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown ce-countdown--theme-10" data-ce-datetime="2027-12-31"&gt;&lt;/div&gt;</pre
         >
       </div>
 
       <div class="theme-demo">
         <div class="video-bg-wrapper">
-          <div
-            class="ce-countdown ce-countdown--theme-12"
-            data-ce-auto
-            data-ce-year="2027"
-            data-ce-month="12"
-            data-ce-day="31"
-          ></div>
+          <div class="ce-countdown ce-countdown--theme-12" data-ce-datetime="2027-12-31"></div>
         </div>
         <h4>Theme 12: Animated Gradient Background</h4>
         <pre class="code-example">
-&lt;div class="ce-countdown ce-countdown--theme-12" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown ce-countdown--theme-12" data-ce-datetime="2027-12-31"&gt;&lt;/div&gt;</pre
         >
       </div>
 
@@ -267,16 +235,13 @@
         <div class="video-bg-wrapper">
           <div
             class="ce-countdown ce-countdown--theme-12"
-            data-ce-auto
-            data-ce-year="2027"
-            data-ce-month="12"
-            data-ce-day="31"
+            data-ce-datetime="2027-12-31"
             data-ce-accent-color="#5865F2"
           ></div>
         </div>
         <h4>Theme 12 with Custom Accent Color</h4>
         <pre class="code-example">
-&lt;div class="ce-countdown ce-countdown--theme-12" data-ce-auto data-ce-year="2027" data-ce-month="12" data-ce-day="31" data-ce-accent-color="#5865F2"&gt;&lt;/div&gt;</pre
+&lt;div class="ce-countdown ce-countdown--theme-12" data-ce-datetime="2027-12-31" data-ce-accent-color="#5865F2"&gt;&lt;/div&gt;</pre
         >
       </div>
     </div>

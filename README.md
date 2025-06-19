@@ -23,12 +23,7 @@ countdown without writing any JavaScript.
 - [Options](#options)
 - [Callback Functions](#callback-functions)
 - [API Methods](#api-methods)
-- [Migrate from jQuery CountEverest](#migrate-from-jquery-counteverest)
 - [Examples](#examples)
-- [Projects Using CountEverest](#projects-using-counteverest)
-- [Comparison with Other Libraries](#comparison-with-other-libraries)
-- [Frequently Asked Quegistions](#frequently-asked-questions)
-- [License](#license)
 
 ## Quick Start
 
@@ -48,13 +43,7 @@ countdown without writing any JavaScript.
 3.  Add the countdown HTML:
 
     ```html
-    <div
-      class="ce-countdown"
-      data-ce-auto
-      data-ce-year="2027"
-      data-ce-month="12"
-      data-ce-day="31"
-    ></div>
+    <div class="ce-countdown" data-ce-datetime="2027-12-31"></div>
     ```
 
 That's it! The script will automatically detect the element, generate the required HTML for the
@@ -63,13 +52,7 @@ countdown, and start the timer when it becomes visible on the page.
 To use a specific theme, just add the theme class:
 
 ```html
-<div
-  class="ce-countdown ce-countdown--theme-6"
-  data-ce-auto
-  data-ce-year="2027"
-  data-ce-month="12"
-  data-ce-day="31"
-></div>
+<div class="ce-countdown ce-countdown--theme-6" data-ce-datetime="2027-12-31"></div>
 ```
 
 ## Installation
@@ -101,22 +84,16 @@ more control.
 
 ## Auto-Initialization (New in 3.1.0)
 
-CountEverest now supports automatic initialization of countdown timers when they scroll into view,
-eliminating the need for custom JavaScript. This feature uses the Intersection Observer API for
-optimal performance and automatically generates the countdown's HTML structure.
+CountEverest automatically detects countdown timers when they scroll into view, eliminating the
+need for custom JavaScript. This feature uses the Intersection Observer API for optimal performance
+and automatically generates the countdown's HTML structure.
 
 ### Basic Auto-Initialization
 
-Simply add the `data-ce-auto` attribute to your countdown element along with the target date:
+Simply add the `data-ce-datetime` attribute to your countdown element:
 
 ```html
-<div
-  class="ce-countdown"
-  data-ce-auto
-  data-ce-year="2027"
-  data-ce-month="12"
-  data-ce-day="31"
-></div>
+<div class="ce-countdown" data-ce-datetime="2027-12-31"></div>
 ```
 
 The countdown will automatically start when the element scrolls into view (10% visible by default).
@@ -127,12 +104,15 @@ Configure your countdown using data attributes:
 
 #### Date/Time Configuration
 
-- `data-ce-year="2025"` - Target year
-- `data-ce-month="12"` - Target month (1-12)
-- `data-ce-day="31"` - Target day (1-31)
-- `data-ce-hour="23"` - Target hour (0-23, default: 0)
-- `data-ce-minute="59"` - Target minute (0-59, default: 0)
-- `data-ce-second="59"` - Target second (0-59, default: 0)
+- `data-ce-datetime="2027-12-31 14:30:45"` - Set target date and time in one attribute
+
+  Supported formats:
+
+  - `"2027"` - Year only (defaults: month=1, day=1, hour=0, minute=0, second=0)
+  - `"2027-12"` - Year and month (defaults: day=1, hour=0, minute=0, second=0)
+  - `"2027-12-31"` - Year, month, and day (defaults: hour=0, minute=0, second=0)
+  - `"2027-12-31 14:30"` - Date and time (hour:minute, defaults: second=0)
+  - `"2027-12-31 14:30:45"` - Complete date and time
 
 #### Layout Configuration
 
@@ -164,7 +144,7 @@ You can manually control auto-initialization with custom options:
 ```javascript
 // Initialize all elements with custom selector and options
 CountEverest.autoInit({
-  selector: '.my-countdown', // Custom selector
+  selector: '.my-countdown', // Custom selector (default: '[data-ce-datetime]')
   rootMargin: '50px', // Start initialization 50px before element is visible
   threshold: 0.5, // Element must be 50% visible before initializing
 });
@@ -172,15 +152,15 @@ CountEverest.autoInit({
 
 ### Manual Control
 
-Auto-initialization happens automatically when the DOM loads if elements with `data-ce-auto` are
-found. You can disable this by removing the attribute and calling methods manually:
+Auto-initialization happens automatically when the DOM loads if elements with `data-ce-datetime` are
+found. You can disable this by calling methods manually:
 
 ```javascript
 // Initialize a specific element from data attributes
 CountEverest.initElement(document.querySelector('.my-countdown'));
 
 // Initialize all elements immediately (no scroll detection)
-CountEverest.initAllVisible('[data-ce-auto]');
+CountEverest.initAllVisible('[data-ce-datetime]');
 ```
 
 ### Browser Compatibility
@@ -209,7 +189,7 @@ seamlessly with your existing content.
 **Usage:** Simply don't add any theme class to your countdown element.
 
 ```html
-<div class="ce-countdown" data-ce-auto data-ce-year="2027"></div>
+<div class="ce-countdown" data-ce-datetime="2027"></div>
 ```
 
 #### Theme 1: Simple Grid Layout (`ce-countdown--theme-1`)
@@ -225,7 +205,7 @@ important.
 **Features:** Grid-based layout, clear visual separation, responsive design
 
 ```html
-<div class="ce-countdown ce-countdown--theme-1" data-ce-auto data-ce-year="2027"></div>
+<div class="ce-countdown ce-countdown--theme-1" data-ce-datetime="2027"></div>
 ```
 
 #### Theme 6: Animated Color Blocks (`ce-countdown--theme-6`)
@@ -243,8 +223,7 @@ animate with a satisfying flip effect every time the countdown updates.
 ```html
 <div
   class="ce-countdown ce-countdown--theme-6"
-  data-ce-auto
-  data-ce-year="2027"
+  data-ce-datetime="2027-12-31"
   data-ce-accent-color="#E91E63"
 ></div>
 ```
@@ -264,8 +243,7 @@ unit. The circles animate smoothly as time progresses.
 ```html
 <div
   class="ce-countdown ce-countdown--theme-9"
-  data-ce-auto
-  data-ce-year="2027"
+  data-ce-datetime="2027-12-31"
   data-ce-accent-color="#2196F3"
 ></div>
 ```
@@ -283,7 +261,7 @@ mechanical feel. Each digit rotates through a complete flip animation when chang
 **Note:** Does not support custom accent colors (uses theme-specific styling)
 
 ```html
-<div class="ce-countdown ce-countdown--theme-10" data-ce-auto data-ce-year="2027"></div>
+<div class="ce-countdown ce-countdown--theme-10" data-ce-datetime="2027-12-31"></div>
 ```
 
 #### Theme 12: Overlay Style for Media Backgrounds (`ce-countdown--theme-12`)
@@ -301,8 +279,7 @@ The text is optimized for readability over various background types.
 ```html
 <div
   class="ce-countdown ce-countdown--theme-12"
-  data-ce-auto
-  data-ce-year="2027"
+  data-ce-datetime="2027-12-31"
   data-ce-accent-color="#FFFFFF"
 ></div>
 ```
@@ -416,153 +393,3 @@ new CountEverest(document.querySelector('.countdown'), {
   },
 });
 ```
-
-### Count Up from a Past Date
-
-```javascript
-new CountEverest(document.querySelector('.count-up'), {
-  day: 1,
-  month: 1,
-  year: 2000,
-  countUp: true,
-});
-```
-
-For more examples, check out our [demo page](https://dxpr.github.io/CountEverest/).
-
-## Projects Using CountEverest
-
-- [DXPR Builder](https://www.drupal.org/project/dxpr_builder): A Drupal website builder that uses
-  CountEverest for countdown functionality.
-
-## Comparison with Other Libraries
-
-| Feature             | CountEverest | Countdown.js | TimeCircles | SimpleTimer.js |
-| ------------------- | ------------ | ------------ | ----------- | -------------- |
-| File Size           | 1 KB         | 4 KB         | 10 KB       | 3 KB           |
-| Dependency-free     | ✅           | ✅           | ❌ (jQuery) | ✅             |
-| Customizable Labels | ✅           | ❌           | ✅          | ✅             |
-| Count Up Feature    | ✅           | ❌           | ❌          | ❌             |
-| Timezone Support    | ✅           | ❌           | ✅          | ❌             |
-
-## Frequently Asked Questions
-
-### Q: How can I change the countdown's target date dynamically?
-
-A: Use the `setTargetDate()` method:
-
-```javascript
-const countdown = new CountEverest(element, options);
-countdown.setTargetDate(new Date(2025, 0, 1));
-```
-
-### Q: Can I display the countdown in a specific timezone?
-
-A: Yes, use the `timeZone` option:
-
-```javascript
-new CountEverest(element, {
-  // ... other options ...
-  timeZone: -5, // for EST (UTC-5)
-});
-```
-
-## Migrate from jQuery CountEverest
-
-Migrating from the old jQuery version to the new vanilla JS version is straightforward. You have
-two main options: switching to the new zero-JavaScript auto-initialization, or updating your
-existing JavaScript code.
-
-### Option 1: Migrate to Auto-Initialization (Recommended)
-
-This is the easiest way to upgrade. It removes the need for custom JavaScript initialization code
-entirely.
-
-1.  **Update your script inclusion:**
-    Make sure you're loading the new `counteverest.min.js` file and remove the jQuery dependency if
-    you no longer need it.
-
-    ```html
-    <!-- Old -->
-    <script src="https://code.jquery.com/jquery-3.x.x.min.js"></script>
-    <script src="js/jquery.counteverest.js"></script>
-
-    <!-- New -->
-    <script src="../dist/counteverest.min.js"></script>
-    ```
-
-2.  **Convert your jQuery options to data attributes:**
-    Instead of initializing the plugin with JavaScript, add `data-ce-auto` to your countdown element
-    and move your options into `data-ce-*` attributes.
-
-    **Old jQuery Code:**
-
-    ```javascript
-    $('.countdown').countEverest({
-      year: 2026,
-      month: 1,
-      day: 1,
-      // ... other options
-    });
-    ```
-
-    **New HTML with Data Attributes:**
-
-    ```html
-    <div
-      class="ce-countdown"
-      data-ce-auto
-      data-ce-year="2026"
-      data-ce-month="1"
-      data-ce-day="1"
-    ></div>
-    ```
-
-    You can now delete your old JavaScript initialization block. See the
-    [Available Data Attributes](#available-data-attributes) section for a full list of attributes.
-
-### Option 2: Migrate to Manual JavaScript Initialization
-
-If you need to control the countdown programmatically (e.g., using API methods), you can update
-your existing JavaScript.
-
-1.  **Update your script inclusion:** (Same as above)
-
-2.  **Update your initialization code:**
-    Replace the jQuery `countEverest()` call with the new `CountEverest` class constructor.
-
-    **Old jQuery Code:**
-
-    ```javascript
-    // Initialize
-    $('.countdown').countEverest({
-      day: 1,
-      month: 1,
-      year: 2026,
-    });
-
-    // Access API
-    var countdown = $('.countdown').data('countEverest');
-    countdown.setTargetDate(new Date(2024, 0, 1));
-    ```
-
-    **New Vanilla JS Code:**
-
-    ```javascript
-    // Initialize
-    const countdownElement = document.querySelector('.countdown');
-    const countdown = new CountEverest(countdownElement, {
-      day: 1,
-      month: 1,
-      year: 2026,
-    });
-
-    // Access API
-    countdown.setTargetDate(new Date(2024, 0, 1));
-    ```
-
-    The option names and API methods remain largely the same, making the transition smooth.
-
-## License
-
-CountEverest is licensed under the GPL v2 License.

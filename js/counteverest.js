@@ -22,6 +22,8 @@ class CountEverest {
       singularLabels: true,
       yearsLabel: 'Years',
       yearLabel: 'Year',
+      monthsLabel: 'Months',
+      monthLabel: 'Month',
       daysLabel: 'Days',
       dayLabel: 'Day',
       hoursLabel: 'Hours',
@@ -31,7 +33,7 @@ class CountEverest {
       secondsLabel: 'Seconds',
       secondLabel: 'Second',
       accentColor: '#284ED8',
-      units: ['days', 'hours', 'minutes', 'seconds'],
+      units: ['years', 'months', 'days', 'hours', 'minutes', 'seconds'],
       onInit: null,
       afterCalculation: null,
       onChange: null,
@@ -101,40 +103,46 @@ class CountEverest {
 
     // Hard-coded time constants (removed from settings)
     const YEAR_MS = 31536000000;
+    const MONTH_MS = 2629800000; // Average month (30.44 days)
     const DAY_MS = 86400000;
     const HOUR_MS = 3600000;
     const MINUTE_MS = 60000;
     const SECOND_MS = 1000;
 
     const values = {};
+    let remainingTime = timeDiff;
 
-    // Calculate years
-    values.years = Math.floor(timeDiff / YEAR_MS);
-    timeDiff %= YEAR_MS;
+    // Define all possible units in order from largest to smallest
+    const allUnits = [
+      { name: 'years', ms: YEAR_MS },
+      { name: 'months', ms: MONTH_MS },
+      { name: 'days', ms: DAY_MS },
+      { name: 'hours', ms: HOUR_MS },
+      { name: 'minutes', ms: MINUTE_MS },
+      { name: 'seconds', ms: SECOND_MS },
+    ];
 
-    // Calculate days
-    values.days = Math.floor(timeDiff / DAY_MS);
-    timeDiff %= DAY_MS;
+    // Calculate each unit in order, but only if it's requested
+    allUnits.forEach((unit) => {
+      if (this.#settings.units.includes(unit.name)) {
+        values[unit.name] = Math.floor(remainingTime / unit.ms);
+        remainingTime %= unit.ms;
+      }
+    });
 
-    // Calculate hours
-    values.hours = Math.floor(timeDiff / HOUR_MS);
-    timeDiff %= HOUR_MS;
-
-    // Calculate minutes
-    values.minutes = Math.floor(timeDiff / MINUTE_MS);
-    timeDiff %= MINUTE_MS;
-
-    // Calculate seconds
-    values.seconds = Math.floor(timeDiff / SECOND_MS);
-
-    const isTheme10 = this.#element.classList.contains('ce-countdown--theme-10');
-
-    // If it's theme 10, or if the countdown markup does NOT include a years wrapper
-    // but *does* include a days wrapper, show the total days remaining.
+    // Special handling for days when years/months are not included:
+    // Show total days instead of days within the current month/year
     if (
-      isTheme10 ||
-      (!this.#settings.units.includes('years') && this.#settings.units.includes('days'))
+      this.#settings.units.includes('days') &&
+      !this.#settings.units.includes('years') &&
+      !this.#settings.units.includes('months')
     ) {
+      values.days = Math.floor(Math.abs(timeDiff) / DAY_MS);
+    }
+
+    // Special handling for Theme 10 - always show total days
+    const isTheme10 = this.#element.classList.contains('ce-countdown--theme-10');
+    if (isTheme10 && this.#settings.units.includes('days')) {
       values.days = Math.floor(originalDiff / DAY_MS);
     }
 
@@ -156,8 +164,19 @@ class CountEverest {
   }
 
   output() {
-    this.#settings.units.forEach((unit) => {
-      const value = this[unit] || 0; // Default to 0 if unit not calculated
+    // Filter units to only show those with non-zero values
+    const visibleUnits = this.#settings.units.filter((unit) => {
+      const value = this[unit] || 0;
+      return value > 0;
+    });
+
+    // If no units are visible (all zeros), show at least the last unit
+    if (visibleUnits.length === 0 && this.#settings.units.length > 0) {
+      visibleUnits.push(this.#settings.units[this.#settings.units.length - 1]);
+    }
+
+    visibleUnits.forEach((unit) => {
+      const value = this[unit] || 0;
       let valueElement;
 
       // Theme-specific selectors
@@ -185,6 +204,33 @@ class CountEverest {
 
       if (labelElement) {
         labelElement.textContent = this.getLabel(unit, value);
+      }
+    });
+
+    // Hide units that are not visible
+    this.#settings.units.forEach((unit) => {
+      if (!visibleUnits.includes(unit)) {
+        const unitElement = this.#element.querySelector(`.ce-${unit}`);
+        const labelElement = this.#element.querySelector(`.ce-${unit}-label`);
+        const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
+
+        if (unitElement && unitElement.parentElement) {
+          unitElement.parentElement.style.display = 'none';
+        }
+        if (colElement) {
+          colElement.style.display = 'none';
+        }
+      } else {
+        // Show units that are visible
+        const unitElement = this.#element.querySelector(`.ce-${unit}`);
+        const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
+
+        if (unitElement && unitElement.parentElement) {
+          unitElement.parentElement.style.display = '';
+        }
+        if (colElement) {
+          colElement.style.display = '';
+        }
       }
     });
   }
@@ -234,12 +280,12 @@ class CountEverest {
 
   /**
    * Static method to enable automatic initialization of countdown timers
-   * when they scroll into view. Elements should have data-ce-auto attribute
-   * and date/time configuration via data attributes.
+   * when they scroll into view. Elements with data-ce-datetime attribute
+   * will be automatically initialized.
    */
   static autoInit(options = {}) {
     const defaultOptions = {
-      selector: '[data-ce-auto]',
+      selector: '[data-ce-datetime]',
       rootMargin: '0px',
       threshold: 0.1,
     };
@@ -552,14 +598,12 @@ class CountEverest {
   static parseDataAttributes(element) {
     const options = {};
 
-    // Parse date/time attributes
-    const dateAttrs = ['day', 'month', 'year', 'hour', 'minute', 'second'];
-    dateAttrs.forEach((attr) => {
-      const value = element.dataset[`ce${attr.charAt(0).toUpperCase() + attr.slice(1)}`];
-      if (value !== undefined) {
-        options[attr] = parseInt(value, 10);
-      }
-    });
+    // Parse datetime string (required for auto-initialization)
+    const datetimeValue = element.dataset.ceDatetime;
+    if (datetimeValue) {
+      const parsedDateTime = CountEverest.parseDatetimeString(datetimeValue);
+      Object.assign(options, parsedDateTime);
+    }
 
     // Parse boolean attributes
     const boolAttrs = ['countUp', 'singularLabels'];
@@ -574,6 +618,8 @@ class CountEverest {
     const stringAttrs = [
       'yearsLabel',
       'yearLabel',
+      'monthsLabel',
+      'monthLabel',
       'daysLabel',
       'dayLabel',
       'hoursLabel',
@@ -591,19 +637,68 @@ class CountEverest {
       }
     });
 
-    // Parse numeric attributes
-    const numericAttrs = [];
-    numericAttrs.forEach((attr) => {
-      const value = element.dataset[`ce${attr.charAt(0).toUpperCase() + attr.slice(1)}`];
-      if (value !== undefined) {
-        options[attr] = parseFloat(value);
-      }
-    });
-
     // Parse units array
     const unitsValue = element.dataset.ceUnits;
     if (unitsValue) {
       options.units = unitsValue.split(',').map((u) => u.trim());
+    }
+
+    return options;
+  }
+
+  /**
+   * Parse a datetime string into individual date/time components
+   * Supports formats like:
+   * - "2027" (year only)
+   * - "2027-12" (year-month)
+   * - "2027-12-31" (year-month-day)
+   * - "2027-12-31 14:30" (year-month-day hour:minute)
+   * - "2027-12-31 14:30:45" (year-month-day hour:minute:second)
+   */
+  static parseDatetimeString(datetimeStr) {
+    const options = {};
+
+    // Split date and time parts
+    const [datePart, timePart] = datetimeStr.trim().split(' ');
+
+    // Parse date part (required)
+    if (datePart) {
+      const dateParts = datePart.split('-');
+
+      // Year is required
+      if (dateParts[0]) {
+        options.year = parseInt(dateParts[0], 10);
+      }
+
+      // Month is optional (defaults to 1)
+      if (dateParts[1]) {
+        options.month = parseInt(dateParts[1], 10);
+      }
+
+      // Day is optional (defaults to 1)
+      if (dateParts[2]) {
+        options.day = parseInt(dateParts[2], 10);
+      }
+    }
+
+    // Parse time part (optional)
+    if (timePart) {
+      const timeParts = timePart.split(':');
+
+      // Hour is optional (defaults to 0)
+      if (timeParts[0]) {
+        options.hour = parseInt(timeParts[0], 10);
+      }
+
+      // Minute is optional (defaults to 0)
+      if (timeParts[1]) {
+        options.minute = parseInt(timeParts[1], 10);
+      }
+
+      // Second is optional (defaults to 0)
+      if (timeParts[2]) {
+        options.second = parseInt(timeParts[2], 10);
+      }
     }
 
     return options;
