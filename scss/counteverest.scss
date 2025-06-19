@@ -605,9 +605,17 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
     color-stop(0%, rgb(0 0 0 / 10%)),
     color-stop(100%, black)
   );
-  background: linear, to bottom, rgb(0 0 0 / 10%) 0%, black 100%;
+  background:
+    linear,
+    to bottom,
+    rgb(0 0 0 / 10%) 0%,
+    black 100%;
   background: linear-gradient(to bottom, rgb(0 0 0 / 10%) 0%, black 100%);
-  background: linear, to bottom, rgb(0 0 0 / 10%) 0%, black 100%;
+  background:
+    linear,
+    to bottom,
+    rgb(0 0 0 / 10%) 0%,
+    black 100%;
 }
 
 .ce-countdown--theme-10 div.play div.ce-digits-inner.active .ce-up .ce-shadow {
@@ -619,9 +627,17 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
     color-stop(0%, rgb(0 0 0 / 10%)),
     color-stop(100%, black)
   );
-  background: linear, to bottom, rgb(0 0 0 / 10%) 0%, black 100%;
+  background:
+    linear,
+    to bottom,
+    rgb(0 0 0 / 10%) 0%,
+    black 100%;
   background: linear-gradient(to bottom, rgb(0 0 0 / 10%) 0%, black 100%);
-  background: linear, to bottom, rgb(0 0 0 / 10%) 0%, black 100%;
+  background:
+    linear,
+    to bottom,
+    rgb(0 0 0 / 10%) 0%,
+    black 100%;
 }
 
 /* DOWN */
@@ -634,9 +650,17 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
     color-stop(0%, black),
     color-stop(100%, rgb(0 0 0 / 10%))
   );
-  background: linear, to bottom, black 0%, rgb(0 0 0 / 10%) 100%;
+  background:
+    linear,
+    to bottom,
+    black 0%,
+    rgb(0 0 0 / 10%) 100%;
   background: linear-gradient(to bottom, black 0%, rgb(0 0 0 / 10%) 100%);
-  background: linear, to bottom, black 0%, rgb(0 0 0 / 10%) 100%;
+  background:
+    linear,
+    to bottom,
+    black 0%,
+    rgb(0 0 0 / 10%) 100%;
 }
 
 .ce-countdown--theme-10 div.play div.ce-digits-inner.active .ce-down .ce-shadow {
@@ -648,9 +672,17 @@ html:not([class*='ce-ie']) .ce-countdown--theme-6 .ce-flip-wrap .ce-flip-back {
     color-stop(0%, black),
     color-stop(100%, rgb(0 0 0 / 10%))
   );
-  background: linear, to bottom, black 0%, rgb(0 0 0 / 10%) 100%;
+  background:
+    linear,
+    to bottom,
+    black 0%,
+    rgb(0 0 0 / 10%) 100%;
   background: linear-gradient(to bottom, black 0%, rgb(0 0 0 / 10%) 100%);
-  background: linear, to bottom, black 0%, rgb(0 0 0 / 10%) 100%;
+  background:
+    linear,
+    to bottom,
+    black 0%,
+    rgb(0 0 0 / 10%) 100%;
 }
 
 @keyframes show {

@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CountEverest - Auto-Initialization Demo</title>
+    <meta
+      name="description"
+      content="Demo of CountEverest auto-initialization feature - countdown timers that start automatically when scrolled into view."
+    />
+    <link rel="stylesheet" href="../dist/counteverest.min.css" />
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+          sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      .intro {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      .demo-section {
+        margin: 100vh 0; /* Large spacing to demonstrate scroll-into-view */
+        padding: 40px 20px;
+        background: linear-gradient(45deg, #f0f8ff, #e6f3ff);
+        border-radius: 10px;
+        text-align: center;
+        border: 2px solid #007bff;
+      }
+      .demo-section h3 {
+        margin-top: 0;
+        color: #007bff;
+      }
+      .highlight {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 20px 0;
+      }
+      .code-example {
+        background-color: #f8f9fa;
+        border: 1px solid #e9ecef;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 20px 0;
+        font-family: 'Courier New', monospace;
+        text-align: left;
+        white-space: pre-wrap;
+        overflow-x: auto;
+      }
+      .countdown-wrapper {
+        margin: 30px 0;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="intro">
+      <h1>CountEverest Auto-Initialization Demo</h1>
+      <p>
+        <strong>New in Version 3.1.0!</strong><br />
+        Scroll down to see countdown timers automatically initialize when they come into view. No
+        custom JavaScript required!
+      </p>
+    </div>
+
+    <div class="demo-section">
+      <h3>Basic Auto-Init Countdown</h3>
+      <p>This countdown will start automatically when you scroll to this section.</p>
+
+      <div class="countdown-wrapper">
+        <div
+          class="ce-countdown"
+          data-ce-auto
+          data-ce-year="2027"
+          data-ce-month="12"
+          data-ce-day="31"
+        >
+          <span class="ce-years"></span> <span class="ce-years-label"></span>
+          <span class="ce-months"></span> <span class="ce-months-label"></span>
+          <span class="ce-days"></span> <span class="ce-days-label"></span>
+          <span class="ce-hours"></span> <span class="ce-hours-label"></span>
+          <span class="ce-minutes"></span> <span class="ce-minutes-label"></span>
+          <span class="ce-seconds"></span> <span class="ce-seconds-label"></span>
+        </div>
+      </div>
+
+      <div class="code-example">
+        &lt;div class="ce-countdown" data-ce-auto data-ce-year="2027" data-ce-month="12"
+        data-ce-day="31"&gt; &lt;span class="ce-years"&gt;&lt;/span&gt; &lt;span
+        class="ce-years-label"&gt;&lt;/span&gt; &lt;span class="ce-months"&gt;&lt;/span&gt; &lt;span
+        class="ce-months-label"&gt;&lt;/span&gt; &lt;span class="ce-days"&gt;&lt;/span&gt; &lt;span
+        class="ce-days-label"&gt;&lt;/span&gt; &lt;span class="ce-hours"&gt;&lt;/span&gt; &lt;span
+        class="ce-hours-label"&gt;&lt;/span&gt; &lt;span class="ce-minutes"&gt;&lt;/span&gt;
+        &lt;span class="ce-minutes-label"&gt;&lt;/span&gt; &lt;span
+        class="ce-seconds"&gt;&lt;/span&gt; &lt;span class="ce-seconds-label"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h3>Custom Labels Auto-Init</h3>
+      <p>This countdown uses custom labels via data attributes.</p>
+
+      <div class="countdown-wrapper">
+        <div
+          class="ce-countdown"
+          data-ce-auto
+          data-ce-year="2027"
+          data-ce-month="6"
+          data-ce-day="15"
+          data-ce-hour="12"
+          data-ce-minute="30"
+          data-ce-second="0"
+          data-ce-days-label="Jours"
+          data-ce-day-label="Jour"
+          data-ce-hours-label="Heures"
+          data-ce-hour-label="Heure"
+          data-ce-minutes-label="Minutes"
+          data-ce-minute-label="Minute"
+          data-ce-seconds-label="Secondes"
+          data-ce-second-label="Seconde"
+        >
+          <span class="ce-days"></span> <span class="ce-days-label"></span>
+          <span class="ce-hours"></span> <span class="ce-hours-label"></span>
+          <span class="ce-minutes"></span> <span class="ce-minutes-label"></span>
+          <span class="ce-seconds"></span> <span class="ce-seconds-label"></span>
+        </div>
+      </div>
+
+      <div class="code-example">
+        &lt;div class="ce-countdown" data-ce-auto data-ce-year="2027" data-ce-month="6"
+        data-ce-day="15" data-ce-hour="12" data-ce-minute="30" data-ce-second="0"
+        data-ce-days-label="Jours" data-ce-day-label="Jour" data-ce-hours-label="Heures"
+        data-ce-hour-label="Heure" data-ce-minutes-label="Minutes" data-ce-minute-label="Minute"
+        data-ce-seconds-label="Secondes" data-ce-second-label="Seconde"&gt; &lt;span
+        class="ce-days"&gt;&lt;/span&gt; &lt;span class="ce-days-label"&gt;&lt;/span&gt; &lt;span
+        class="ce-hours"&gt;&lt;/span&gt; &lt;span class="ce-hours-label"&gt;&lt;/span&gt; &lt;span
+        class="ce-minutes"&gt;&lt;/span&gt; &lt;span class="ce-minutes-label"&gt;&lt;/span&gt;
+        &lt;span class="ce-seconds"&gt;&lt;/span&gt; &lt;span
+        class="ce-seconds-label"&gt;&lt;/span&gt; &lt;/div&gt;
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h3>Count-Up Auto-Init</h3>
+      <p>This countdown counts UP from a past date automatically.</p>
+
+      <div class="countdown-wrapper">
+        <div
+          class="ce-countdown"
+          data-ce-auto
+          data-ce-year="2020"
+          data-ce-month="1"
+          data-ce-day="1"
+          data-ce-count-up="true"
+          data-ce-days-label="Days Since Launch"
+          data-ce-day-label="Day Since Launch"
+        >
+          <span class="ce-days"></span> <span class="ce-days-label"></span>
+          <span class="ce-hours"></span> <span class="ce-hours-label"></span>
+          <span class="ce-minutes"></span> <span class="ce-minutes-label"></span>
+          <span class="ce-seconds"></span> <span class="ce-seconds-label"></span>
+        </div>
+      </div>
+
+      <div class="code-example">
+        &lt;div class="ce-countdown" data-ce-auto data-ce-year="2020" data-ce-month="1"
+        data-ce-day="1" data-ce-count-up="true" data-ce-days-label="Days Since Launch"
+        data-ce-day-label="Day Since Launch"&gt; &lt;span class="ce-days"&gt;&lt;/span&gt; &lt;span
+        class="ce-days-label"&gt;&lt;/span&gt; &lt;span class="ce-hours"&gt;&lt;/span&gt; &lt;span
+        class="ce-hours-label"&gt;&lt;/span&gt; &lt;span class="ce-minutes"&gt;&lt;/span&gt;
+        &lt;span class="ce-minutes-label"&gt;&lt;/span&gt; &lt;span
+        class="ce-seconds"&gt;&lt;/span&gt; &lt;span class="ce-seconds-label"&gt;&lt;/span&gt;
+        &lt;/div&gt;
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h3>Custom Time Auto-Init</h3>
+      <p>This countdown shows a specific time (3:45:30 PM on March 20th, 2027).</p>
+
+      <div class="countdown-wrapper">
+        <div
+          class="ce-countdown"
+          data-ce-auto
+          data-ce-year="2027"
+          data-ce-month="3"
+          data-ce-day="20"
+          data-ce-hour="15"
+          data-ce-minute="45"
+          data-ce-second="30"
+        >
+          <span class="ce-days"></span> <span class="ce-days-label"></span>
+          <span class="ce-hours"></span> <span class="ce-hours-label"></span>
+          <span class="ce-minutes"></span> <span class="ce-minutes-label"></span>
+          <span class="ce-seconds"></span> <span class="ce-seconds-label"></span>
+        </div>
+      </div>
+
+      <div class="code-example">
+        &lt;div class="ce-countdown" data-ce-auto data-ce-year="2027" data-ce-month="3"
+        data-ce-day="20" data-ce-hour="15" data-ce-minute="45" data-ce-second="30" &gt; &lt;span
+        class="ce-days"&gt;&lt;/span&gt; &lt;span class="ce-days-label"&gt;&lt;/span&gt; &lt;span
+        class="ce-hours"&gt;&lt;/span&gt; &lt;span class="ce-hours-label"&gt;&lt;/span&gt; &lt;span
+        class="ce-minutes"&gt;&lt;/span&gt; &lt;span class="ce-minutes-label"&gt;&lt;/span&gt;
+        &lt;span class="ce-seconds"&gt;&lt;/span&gt; &lt;span
+        class="ce-seconds-label"&gt;&lt;/span&gt; &lt;/div&gt;
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h3>Benefits of Auto-Initialization</h3>
+      <ul style="text-align: left; max-width: 600px; margin: 0 auto">
+        <li><strong>No JavaScript Required:</strong> Just add data attributes to your HTML</li>
+        <li>
+          <strong>Performance Optimized:</strong> Uses Intersection Observer for efficient scroll
+          detection
+        </li>
+        <li><strong>Lazy Loading:</strong> Countdowns only start when visible, saving resources</li>
+        <li><strong>Easy Configuration:</strong> All options available via data attributes</li>
+        <li><strong>Backwards Compatible:</strong> Works alongside manual initialization</li>
+        <li><strong>Browser Support:</strong> Graceful fallback for older browsers</li>
+      </ul>
+    </div>
+
+    <script src="../dist/counteverest.min.js"></script>
+    <!-- No additional JavaScript needed! Auto-initialization handles everything -->
+
+    <script>
+      // Optional: Log when countdowns initialize
+      console.log(
+        'CountEverest auto-initialization enabled. Scroll to see countdowns start automatically!'
+      );
+    </script>
+  </body>
+</html>

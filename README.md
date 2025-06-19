@@ -7,7 +7,6 @@
 
 ![counteverest-plain](https://github.com/user-attachments/assets/eb4ee579-eac9-4ecf-96f2-f98bf116606e)
 
-
 CountEverest is a lightweight, customizable countdown script that's easy to integrate into your
 projects. It offers a range of features including callback functions, left-hand zeros, and easy
 localization. Perfect for developers who want a flexible countdown solution without the need for
@@ -128,7 +127,6 @@ CountEverest offers extensive customization options. Here are some examples:
 #### Minimal Style For Background Video/Image (Theme 12)
 
 ![counteverest-bgvideo](https://github.com/user-attachments/assets/eca809f7-09bc-4e0e-b43b-83afc05f41ce)
-
 
 ### Custom Labels
 
