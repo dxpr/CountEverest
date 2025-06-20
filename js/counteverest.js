@@ -9,6 +9,7 @@
 // eslint-disable-next-line no-unused-vars
 class CountEverest {
   static DEFAULT_SETTINGS;
+  static _instances = new Map();
 
   constructor(element, options) {
     CountEverest.DEFAULT_SETTINGS = {
@@ -49,6 +50,11 @@ class CountEverest {
 
     // Store settings on element for theme functions to access
     element._ceSettings = this.#settings;
+
+    // Register instance by element ID if available
+    if (element.id) {
+      CountEverest._instances.set(element.id, this);
+    }
 
     this.#intervalId = null;
     this.init();
@@ -290,6 +296,11 @@ class CountEverest {
 
   destroy() {
     clearInterval(this.#intervalId);
+
+    // Remove from registry if element has ID
+    if (this.#element.id) {
+      CountEverest._instances.delete(this.#element.id);
+    }
   }
 
   strPad(str, len, pad = '0') {
@@ -351,6 +362,18 @@ class CountEverest {
         CountEverest.initElement(element);
       }
     });
+  }
+
+  /**
+   * Destroy instance by element ID
+   */
+  static destroyInstance(elementId) {
+    const instance = CountEverest._instances.get(elementId);
+    if (instance) {
+      instance.destroy();
+      return true;
+    }
+    return false;
   }
 
   /**
