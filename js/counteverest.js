@@ -370,8 +370,6 @@ class CountEverest {
 
     // Theme 9: Minimal Circles
     else if (element.classList.contains('ce-countdown--theme-9')) {
-      options.leftHandZeros = false;
-
       options.onChange = function () {
         CountEverest.theme9DrawCircles(element, this, options.accentColor || '#284ED8');
       };
@@ -475,12 +473,12 @@ class CountEverest {
 
     // Define unit configurations with their maximum values
     const unitConfigs = {
-      years: { max: 100, value: data.years || 0, pad: false },
-      months: { max: 12, value: data.months || 0, pad: false },
-      days: { max: 365, value: data.days || 0, pad: false },
-      hours: { max: 24, value: data.hours || 0, pad: true },
-      minutes: { max: 60, value: data.minutes || 0, pad: true },
-      seconds: { max: 60, value: data.seconds || 0, pad: true },
+      years: { max: 100, value: data.years || 0 },
+      months: { max: 12, value: data.months || 0 },
+      days: { max: 365, value: data.days || 0 },
+      hours: { max: 24, value: data.hours || 0 },
+      minutes: { max: 60, value: data.minutes || 0 },
+      seconds: { max: 60, value: data.seconds || 0 },
     };
 
     // Update text values for all units that exist in the DOM
@@ -489,7 +487,10 @@ class CountEverest {
       if (config) {
         const valueEl = element.querySelector(`.ce-${unit}`);
         if (valueEl) {
-          valueEl.textContent = config.pad ? data.strPad(config.value, 2) : config.value;
+          // Respect the leftHandZeros setting
+          valueEl.textContent = settings.leftHandZeros
+            ? data.strPad(config.value, 2)
+            : config.value;
         }
       }
     });
