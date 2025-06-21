@@ -150,12 +150,6 @@ class CountEverest {
       values.days = Math.floor(Math.abs(timeDiff) / DAY_MS);
     }
 
-    // Special handling for Theme 10 - always show total days
-    const isTheme10 = this.#element.classList.contains('ce-countdown--theme-10');
-    if (isTheme10 && this.#settings.units.includes('days')) {
-      values.days = Math.floor(originalDiff / DAY_MS);
-    }
-
     Object.assign(this, values);
 
     if (typeof this.#settings.afterCalculation === 'function') {
