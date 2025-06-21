@@ -38,15 +38,32 @@ module.exports = (env, argv) => {
       }),
     ],
     optimization: {
+      minimize: isProduction,
       minimizer: [
         new TerserPlugin({
           terserOptions: {
             ecma: 2018,
+            compress: isProduction
+              ? {
+                  drop_console: true, // Remove console.log statements in production
+                  drop_debugger: true, // Remove debugger statements
+                  pure_funcs: ['console.log', 'console.info', 'console.debug'], // Remove specific console methods
+                  passes: 2, // Run compression twice for better results
+                }
+              : {
+                  drop_console: false, // Keep console.log in development
+                  drop_debugger: false,
+                },
             format: {
               comments: false,
             },
-            keep_classnames: true,
-            keep_fnames: true,
+            mangle: isProduction
+              ? {
+                  toplevel: true, // Mangle top-level variable names in production
+                }
+              : false, // Don't mangle in development for easier debugging
+            keep_classnames: !isProduction, // Keep class names in development
+            keep_fnames: !isProduction, // Keep function names in development
           },
           extractComments: false,
         }),

@@ -174,27 +174,8 @@ class CountEverest {
   }
 
   output() {
-    // For themes that handle their own visibility (like theme 9 and 10), don't filter units
-    const isSpecialTheme =
-      this.#element.classList.contains('ce-countdown--theme-9') ||
-      this.#element.classList.contains('ce-countdown--theme-10');
-
-    let visibleUnits;
-    if (isSpecialTheme) {
-      // For special themes, show all configured units
-      visibleUnits = this.#settings.units;
-    } else {
-      // For other themes, filter units to only show those with non-zero values
-      visibleUnits = this.#settings.units.filter((unit) => {
-        const value = this[unit] || 0;
-        return value > 0;
-      });
-
-      // If no units are visible (all zeros), show at least the last unit
-      if (visibleUnits.length === 0 && this.#settings.units.length > 0) {
-        visibleUnits.push(this.#settings.units[this.#settings.units.length - 1]);
-      }
-    }
+    // Always show all configured units regardless of their values
+    const visibleUnits = this.#settings.units;
 
     visibleUnits.forEach((unit) => {
       const value = this[unit] || 0;
@@ -228,35 +209,18 @@ class CountEverest {
       }
     });
 
-    // Only hide units for non-special themes
-    if (!isSpecialTheme) {
-      // Hide units that are not visible
-      this.#settings.units.forEach((unit) => {
-        if (!visibleUnits.includes(unit)) {
-          const unitElement = this.#element.querySelector(`.ce-${unit}`);
-          const labelElement = this.#element.querySelector(`.ce-${unit}-label`);
-          const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
+    // Ensure all units are visible
+    this.#settings.units.forEach((unit) => {
+      const unitElement = this.#element.querySelector(`.ce-${unit}`);
+      const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
 
-          if (unitElement && unitElement.parentElement) {
-            unitElement.parentElement.style.display = 'none';
-          }
-          if (colElement) {
-            colElement.style.display = 'none';
-          }
-        } else {
-          // Show units that are visible
-          const unitElement = this.#element.querySelector(`.ce-${unit}`);
-          const colElement = this.#element.querySelector(`.ce-col:has(.ce-${unit})`);
-
-          if (unitElement && unitElement.parentElement) {
-            unitElement.parentElement.style.display = '';
-          }
-          if (colElement) {
-            colElement.style.display = '';
-          }
-        }
-      });
-    }
+      if (unitElement && unitElement.parentElement) {
+        unitElement.parentElement.style.display = '';
+      }
+      if (colElement) {
+        colElement.style.display = '';
+      }
+    });
   }
 
   wrapDigits(value) {
@@ -399,11 +363,6 @@ class CountEverest {
   static applyThemeOptions(element, options) {
     // Theme 6: Colorful Blocks
     if (element.classList.contains('ce-countdown--theme-6')) {
-      // Set appropriate units if not explicitly set
-      if (!options.units || options.units.length === 6) {
-        options.units = ['days', 'hours', 'minutes', 'seconds'];
-      }
-
       options.daysWrapper = '.ce-days .ce-flip-back';
       options.hoursWrapper = '.ce-hours .ce-flip-back';
       options.minutesWrapper = '.ce-minutes .ce-flip-back';
@@ -417,11 +376,6 @@ class CountEverest {
 
     // Theme 9: Minimal Circles
     else if (element.classList.contains('ce-countdown--theme-9')) {
-      // Set appropriate units if not explicitly set
-      if (!options.units || options.units.length === 6) {
-        options.units = ['days', 'hours', 'minutes', 'seconds'];
-      }
-
       options.leftHandZeros = false;
 
       options.onChange = function () {
@@ -521,7 +475,9 @@ class CountEverest {
     }
 
     // Get the settings from the element to know which units are configured
-    const settings = element._ceSettings || { units: ['days', 'hours', 'minutes', 'seconds'] };
+    const settings = element._ceSettings || {
+      units: ['years', 'months', 'days', 'hours', 'minutes', 'seconds'],
+    };
 
     // Define unit configurations with their maximum values
     const unitConfigs = {
@@ -569,7 +525,9 @@ class CountEverest {
    */
   static theme10FlipClock(element, data, isFirstCalculation) {
     // Get the settings from the element to know which units are configured
-    const settings = element._ceSettings || { units: ['days', 'hours', 'minutes', 'seconds'] };
+    const settings = element._ceSettings || {
+      units: ['years', 'months', 'days', 'hours', 'minutes', 'seconds'],
+    };
 
     // Build units object based on what's actually configured
     const units = {};
