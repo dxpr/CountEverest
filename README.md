@@ -29,22 +29,22 @@ countdown without writing any JavaScript.
 
 1. Clone the repository or download the latest release:
 
-    ```bash
-    git clone git@github.com:dxpr/CountEverest.git
-    ```
+   ```bash
+   git clone git@github.com:dxpr/CountEverest.git
+   ```
 
 2. Include the CSS and JS files in your HTML:
 
-    ```html
-    <link rel="stylesheet" href="../dist/counteverest.min.css" />
-    <script src="../dist/counteverest.min.js"></script>
-    ```
+   ```html
+   <link rel="stylesheet" href="../dist/counteverest.min.css" />
+   <script src="../dist/counteverest.min.js"></script>
+   ```
 
 3. Add the countdown HTML:
 
-    ```html
-    <div class="ce-countdown" data-ce-datetime="2027-12-31"></div>
-    ```
+   ```html
+   <div class="ce-countdown" data-ce-datetime="2027-12-31"></div>
+   ```
 
 That's it! The script will automatically detect the element, generate the required HTML for the
 countdown, and start the timer when it becomes visible on the page.
@@ -63,24 +63,24 @@ more control.
 1. Include the CSS and JS files in your HTML (see Quick Start).
 2. Add an empty `div` where you want the countdown to appear.
 
-    ```html
-    <div class="my-countdown"></div>
-    ```
+   ```html
+   <div class="my-countdown"></div>
+   ```
 
 3. Initialize CountEverest with your desired options:
 
-    ```javascript
-    document.addEventListener('DOMContentLoaded', () => {
-      const countdownElement = document.querySelector('.my-countdown');
-      if (countdownElement) {
-        new CountEverest(countdownElement, {
-          year: 2027,
-          month: 12,
-          day: 31,
-        });
-      }
-    });
-    ```
+   ```javascript
+   document.addEventListener('DOMContentLoaded', () => {
+     const countdownElement = document.querySelector('.my-countdown');
+     if (countdownElement) {
+       new CountEverest(countdownElement, {
+         year: 2027,
+         month: 12,
+         day: 31,
+       });
+     }
+   });
+   ```
 
 ## Auto-Initialization (New in 3.1.0)
 
@@ -346,6 +346,21 @@ Here's a comprehensive list of options you can use to customize CountEverest:
 - `onInit()`: Called when the countdown is initialized
 - `afterCalculation()`: Called after time calculations are complete
 - `onChange()`: Called every second after the time has been recalculated.
+
+### Completion Callback
+
+You can also add a callback function that runs when the countdown reaches zero:
+
+```javascript
+new CountEverest(element, options, function () {
+  // This function runs when countdown completes
+  console.log('Countdown finished!');
+  // You can show a message, trigger an animation, or do anything else
+});
+```
+
+This is useful for showing success messages, triggering animations,
+or running any code when the countdown ends.
 
 ## API Methods
 

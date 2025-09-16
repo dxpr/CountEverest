@@ -11,7 +11,7 @@ class CountEverest {
   static DEFAULT_SETTINGS;
   static _instances = new Map();
 
-  constructor(element, options) {
+  constructor(element, options, callback) {
     CountEverest.DEFAULT_SETTINGS = {
       day: 1,
       month: 1,
@@ -40,6 +40,7 @@ class CountEverest {
       afterCalculation: null,
       onChange: null,
     };
+    this.#callback = callback;
     this.#element = element;
     this.#settings = { ...CountEverest.DEFAULT_SETTINGS, ...options };
 
@@ -59,7 +60,7 @@ class CountEverest {
     this.#intervalId = null;
     this.init();
   }
-
+  #callback;
   #element;
   #settings;
   #intervalId;
@@ -160,6 +161,7 @@ class CountEverest {
 
     if (timeDiff <= 0 && !this.#settings.countUp) {
       clearInterval(this.#intervalId);
+      this.#callback.call(this);
     }
 
     if (typeof this.#settings.onChange === 'function') {
@@ -337,7 +339,7 @@ class CountEverest {
   /**
    * Initialize a single countdown element from data attributes
    */
-  static initElement(element) {
+  static initElement(element, callback) {
     const options = CountEverest.parseDataAttributes(element);
 
     // Apply theme-specific options
@@ -348,7 +350,7 @@ class CountEverest {
     element.dataset.ceInitialized = 'true';
 
     // Create new CountEverest instance
-    new CountEverest(element, options);
+    new CountEverest(element, options, callback);
   }
 
   /**
